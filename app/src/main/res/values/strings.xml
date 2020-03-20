@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Utility_manage</string>
+    <string name="register">ลงทะเบียน</string>
+    <string name="savevalues">จดมาตร</string>
+    <string name="headersavevalues">การจดเลขมาตร</string>
+    <string name="homeid">เลขที่บ้าน</string>
+    <string name="homegps">GPS</string>
+    <string name="valuesid">เลขมาตร</string>
+    <string name="invoices">พิมพ์แจ้งหนี้</string>
+    <string name="printslip">พิมพ์ใบเสร็จ</string>
+    <string name="headerregister">ลงทะเบียน</string>
+    <string name="meterid">เลขมิเตอร์</string>
+    <string name="typepay">ประเภทการจ่ายเงิน</string>
+    <string name="save">บันทึก</string>
+    <string name="cancel">Cancle</string>
+    <string name="success">Success</string>
+</resources>
