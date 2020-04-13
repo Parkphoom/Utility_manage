@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
 <!--    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">-->
@@ -7,12 +7,24 @@
 <!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
 <!--        <item name="colorAccent">@color/colorAccent</item>-->
 <!--    </style>-->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar.Bridge">
 
-        <item name="colorPrimary">@color/design_default_color_on_secondary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">#ea7b4f</item>
+        <item name="colorPrimaryDark">#dc5d35</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@android:color/white</item>
+        <item name="titleTextColor">#fcfdbe</item>
+        <item name="materialCalendarStyle">@style/Widget.MaterialComponents.MaterialCalendar</item>
+        <item name="materialCalendarFullscreenTheme">@style/ThemeOverlay.MaterialComponents.MaterialCalendar.Fullscreen</item>
+        <item name="materialCalendarTheme">@style/ThemeOverlay.MaterialComponents.MaterialCalendar</item>
+    </style>
+    <style name="AppThemeNoactionbar" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+
+        <item name="colorPrimary">#ea7b4f</item>
+        <item name="colorPrimaryDark">#dc5d35</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="titleTextColor">#fcfdbe</item>
     </style>
 
 
@@ -21,9 +33,41 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
     </style>
+    <style name="textyellow" parent="@android:style/TextAppearance">
+        <item name="android:textColor">#fcfdbe</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 
     <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">#000000</item>
         <item name="boxStrokeWidth">3dp</item>
+    </style>
+
+    <style name="CustomDialog" parent="android:Theme.Material.Light.Dialog.Alert" tools:targetApi="lollipop">
+        <item name="colorPrimaryDark">#dc5d35</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:windowAnimationStyle">@style/CustomDialogAnimationuptodown</item>
+    </style>
+    <style name="LoadingDialog" parent="android:Theme.Material.Light.Dialog.Alert" tools:targetApi="lollipop">
+        <item name="colorPrimaryDark">#dc5d35</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="CustomDialogAnimationlefttoright">
+        <item name="android:windowEnterAnimation">@anim/translate_left_side</item>
+        <item name="android:windowExitAnimation">@anim/translate_right_side</item>
+    </style>
+    <style name="CustomDialogAnimationuptodown">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_bottom</item>
     </style>
 </resources>

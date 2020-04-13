@@ -1,26 +1,41 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'announce'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "com.example.utility_manage"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+        ndk {
+            abiFilters "armeabi-v7a", "x86", "armeabi", "mips", "armeabi-v8a"
+        }
     }
+
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    compileOptions {
+        sourceCompatibility "1.8"
+        targetCompatibility "1.8"
+    }
+    sourceSets.main {
+        jniLibs.srcDir 'src/main/libs' //set libs as .so's location instead of jniLibs
+        jni.srcDirs = [] //disable automatic ndk-build call with auto-generated Android.mk
     }
 
 }
@@ -37,4 +52,39 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
+
+    //telpo printer
+    implementation files('libs/core-3.1.0.jar')
+    implementation files('libs/SmartCardLib.jar')
+    implementation files('libs/telpo_api.jar')
+
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.8.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
+    implementation('com.squareup.okhttp3:logging-interceptor:4.5.0')
+
+
+    //loadingspin
+    implementation 'com.github.Nikoloutsos:KLoadingSpin:1.1.0'
+
+    //maps
+    implementation 'com.github.shivpujan12:LocationPicker:v1.2'
+
+    //picture
+    implementation 'com.aminography:choosephotohelper:1.1.0'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+
+    //toggle
+    implementation 'us.belka:androidtoggleswitch:1.2.2'
 }
+task nativeLibsToJar(type: Jar, description: 'create a jar archive of the native libs') {
+    destinationDir file("$buildDir/native-libs")
+    baseName 'native-libs'
+    from fileTree(dir: 'src/main/jnilibs', include: '**/*.so')
+    into 'lib/'
+}
+
+tasks.withType(JavaCompile)
+        {
+            compileTask -> compileTask.dependsOn(nativeLibsToJar)
+        }

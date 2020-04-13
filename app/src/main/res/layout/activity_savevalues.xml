@@ -10,107 +10,290 @@
     android:orientation="vertical"
     tools:context=".SavevaluesActivity">
 
-    <TextView
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="30dp"
-        android:text="@string/headersavevalues"
-        android:textColor="#000000"
-        android:textSize="36sp" />
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imgfromcam"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"/>
-
-    <ImageButton
-        android:layout_marginTop="20dp"
-        android:id="@+id/opencambtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/button_tranparent"
-        android:paddingLeft="60dp"
-        android:paddingTop="10dp"
-        android:paddingRight="60dp"
-        android:paddingBottom="10dp"
-        android:src="@drawable/icons8_camera_24px_2" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/homeid_text_input"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/homeid" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:orientation="vertical">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/savevalues_gps_text_input_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_underline"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/gps_text_input"
-            android:focusable="false"
-            android:drawableRight="@drawable/icons8_place_marker_32px_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/homegps" />
-    </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:id="@+id/homeid_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/icons8_home_16px"
+                    android:drawablePadding="10dp"
+                    android:hint="@string/homeid"
+                    android:inputType="number|text" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/valuesId_text_input"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/valuesid" />
-    </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:id="@+id/meterId_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/icons8_odometer_16"
+                    android:drawablePadding="10dp"
+                    android:hint="@string/meterid"
+                    android:imeOptions="actionNext"
+                    android:inputType="number" />
+                <TextView
+                    android:id="@+id/buildingtype_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/icons8_real_estate_16"
+                    android:drawablePadding="10dp"
+                    android:hint="@string/buildingtype"
+                    android:imeOptions="actionNext"
+                    android:inputType="number" />
+                <TextView
+                    android:id="@+id/name_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/icons8_user_16"
+                    android:drawablePadding="10dp"
+                    android:hint="@string/name"
+                    android:imeOptions="actionNext"
+                    android:inputType="number" />
+                <TextView
+                    android:id="@+id/telnum_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/icons8_telephone_16"
+                    android:drawablePadding="10dp"
+                    android:hint="@string/telnum"
+                    android:imeOptions="actionNext"
+                    android:inputType="number" />
+                <TextView
+                    android:id="@+id/oldwatermeter_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/icons8_water_16"
+                    android:drawablePadding="10dp"
+                    android:hint="@string/oldwatermeter"
+                    android:imeOptions="actionNext"
+                    android:inputType="number" />
+            </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:orientation="horizontal">
 
-        <Button
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_weight="1"
-            android:background="@drawable/button_tranparent"
-            android:text="@string/invoices" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1"
-            android:background="@drawable/button_tranparent"
-            android:text="@string/printslip" />
 
-    </LinearLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_underline"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/opencambtn"
+                    style="@style/Widget.MaterialComponents.FloatingActionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_margin="16dp"
+                    app:backgroundTint="#dc5d35"
+                    app:borderWidth="0dp"
+                    app:elevation="6dp"
+                    app:srcCompat="@drawable/icons8_add_image_24px" />
+
+                <ImageView
+                    android:id="@+id/imgfromcam"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/icons8_image_200px" />
+
+
+            </FrameLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/gps_text_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/gps_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/icons8_place_marker_32px_1"
+                    android:focusable="false"
+                    android:hint="@string/homegps"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/valuesId_text_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/valuesId_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/newwatermeter"
+                    android:imeOptions="actionNext"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/typepay_text_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/typepay_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/type"
+                    android:imeOptions="actionNext"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/amount_text_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/amount_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/amount"
+                    android:imeOptions="actionDone"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/setdaterangeexport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/datebox"
+                    android:orientation="vertical"
+                    android:padding="4dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center|start"
+                        android:text="@string/Startdateinvoice"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:id="@+id/txtTimeStart"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/icons8_calendar_24px"
+                        android:gravity="center|start"
+                        android:hint="-"
+                        android:padding="5dp"
+                        android:textColor="#000000" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/datebox"
+                    android:orientation="vertical"
+                    android:padding="4dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center|start"
+                        android:text="@string/Enddateinvoice"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:id="@+id/txtTimeEnd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/icons8_calendar_24px"
+                        android:gravity="center|start"
+                        android:hint="-"
+                        android:padding="5dp"
+                        android:textColor="#000000" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/printinvoicebtn"
+                    style="@style/textyellow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_selector"
+                    android:text="@string/printinvoices" />
+
+                <Button
+                    android:id="@+id/submitbtn"
+
+                    style="@style/textyellow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_selector"
+                    android:text="@string/submit" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>
