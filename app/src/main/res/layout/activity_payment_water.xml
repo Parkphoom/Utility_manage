@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context=".PaymentWaterActivity">
+    tools:context="com.wac.utility_manage.PaymentWaterActivity">
 
 
     <ScrollView
@@ -19,45 +20,241 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/homeid_text_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp">
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_underline"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/homeid_text_input"
+                <TextView
+                    android:layout_gravity="center"
+                    android:text="ยอดค้างชำระ"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/invoice"
+                    android:gravity="center"
+                    android:textSize="22sp"
+                    android:layout_gravity="center"
+                    android:drawableLeft="@drawable/icons8_thai_baht_50px"
+                    android:drawablePadding="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <LinearLayout
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/border_underline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/homeid"
-                    android:imeOptions="actionNext"
-                    android:inputType="number" />
+                    android:orientation="horizontal">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        style="@style/textred"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="10dp"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:layout_gravity="right"
+                        android:text="@string/Enddateinvoice" />
 
+                    <TextView
+                        style="@style/textred"
+                        android:id="@+id/TimeEnd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:textAlignment="gravity" />
+                </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/meterId_text_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/meterId_text_input"
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:textSize="20sp"
+                    android:text="@string/Userinfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"/>
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/meterid"
-                    android:imeOptions="actionNext"
-                    android:inputType="number" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/homeid_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/icons8_home_16px"
+                        android:drawablePadding="10dp"
+                        android:inputType="number|text"
+                        android:text="@string/homeid" />
+
+                    <TextView
+                        android:id="@+id/homeid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:textAlignment="gravity" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/meterId_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/icons8_odometer_16"
+                        android:drawablePadding="10dp"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:text="@string/meterid" />
+
+                    <TextView
+                        android:id="@+id/meterId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:textAlignment="gravity" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/buildingtype_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/icons8_real_estate_16"
+                        android:drawablePadding="10dp"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:text="@string/buildingtype" />
+
+                    <TextView
+                        android:id="@+id/buildingtype"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:textAlignment="gravity" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/name_text_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/icons8_user_16"
+                        android:drawablePadding="10dp"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:text="@string/name" />
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:textAlignment="gravity" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/telnum_text_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/icons8_telephone_16"
+                        android:drawablePadding="10dp"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:text="@string/telnum" />
+
+                    <TextView
+                        android:id="@+id/telnum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:textAlignment="gravity" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/textgreen"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/icons8_schedule_100px"
+                        android:drawablePadding="10dp"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:text="@string/Startdateinvoice" />
+
+                    <TextView
+                        style="@style/textgreen"
+                        android:id="@+id/TimeStart"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:textAlignment="gravity" />
+                </LinearLayout>
+
+
+
+
+
+            </LinearLayout>
+
+
 
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -67,7 +264,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="2dp"
                     android:layout_weight="1">
 
@@ -75,6 +272,10 @@
                         android:id="@+id/startvaluesId_text_input"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
                         android:hint="@string/oldwatermeter"
                         android:imeOptions="actionNext"
                         android:inputType="number" />
@@ -86,13 +287,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/valuesId_text_input"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
                         android:hint="@string/newwatermeter"
                         android:imeOptions="actionNext"
                         android:inputType="number" />
@@ -105,14 +310,14 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp">
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/amount_text_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/amount"
+                    android:hint="จำนวนเงินที่จ่าย"
                     android:imeOptions="actionDone"
                     android:inputType="numberDecimal" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -121,33 +326,33 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginBottom="20dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <Button
-                    style="@style/textyellow"
-                    android:id="@+id/printinvoicebtn"
+                    android:id="@+id/nextbtn"
+                    style="@style/textwhite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_selector"
-                    android:text="@string/printinvoices" />
+                    android:text="@string/next" />
 
-                <Button
-                    style="@style/textyellow"
-                    android:id="@+id/printpaysilpbtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_selector"
-                    android:text="@string/printslip" />
+<!--                <Button-->
+<!--                    android:id="@+id/printpaysilpbtn"-->
+<!--                    style="@style/textorange"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="5dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:background="@drawable/button_orange_stroke"-->
+<!--                    android:enabled="false"-->
+<!--                    android:text="@string/printslip" />-->
 
             </LinearLayout>
         </LinearLayout>

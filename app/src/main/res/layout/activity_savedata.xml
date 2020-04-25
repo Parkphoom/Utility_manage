@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context=".SavedataActivity">
+    tools:context="com.wac.utility_manage.SavedataActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -125,6 +126,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
+                android:paddingBottom="10dp"
                 android:background="@drawable/border_underline"
                 android:orientation="vertical">
 
@@ -150,29 +152,10 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/detail"
                         android:imeOptions="actionDone"
-                        android:inputType="text"
-                        android:nextFocusDown="@id/gps_text_input" />
+                        android:inputType="text"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/gps_text_layout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="15dp">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/gps_text_input"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableRight="@drawable/icons8_place_marker_32px_1"
-                        android:focusable="false"
-                        android:hint="@string/homegps"
-                        android:imeOptions="actionNext"
-                        android:inputType="numberDecimal" />
-                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 

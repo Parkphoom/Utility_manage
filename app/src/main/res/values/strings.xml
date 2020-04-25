@@ -1,16 +1,37 @@
 <resources>
     //URL
-    <string name="PORT">5000/</string>
     <string name="URL">http://10.0.0.205:</string>
-    <string name="addInvoice">addInvoice/</string>
-    <string name="regismember">regisMember/</string>
-    <string name="addtravel">addTravel/</string>
-    <string name="addbusiness">addBusiness/</string>
-    <string name="addservice">addService/</string>
-    <string name="addasset">addAsset/</string>
-    <string name="finddatameteruser">FindDataMeterForUser/</string>
+    <string name="PORT">5000/</string>
+    <string name="addInvoiceURL">addInvoice/</string>
+    <string name="regismemberURL">regisMember/</string>
+    <string name="addtravelURL">addTravel/</string>
+    <string name="addbusinessURL">addBusiness/</string>
+    <string name="addserviceURL">addService/</string>
+    <string name="addassetURL">addAsset/</string>
+    <string name="finddatameteruserURL">FindDataMeterForUser/</string>
+    <string name="loginURL">loginAd/</string>
+    <string name="Payment">payment/</string>
 
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBcIn55CCQIVSZHS06m4rjZhEhk1qS3S7M</string>
+
+    <string name="NOPAPER">3</string>
+    <string name="LOWBATTERY">4</string>
+    <string name="PRINTVERSION">5</string>
+    <string name="PRINTBARCODE">6</string>
+    <string name="PRINTQRCODE">7</string>
+    <string name="PRINTPAPERWALK">8</string>
+    <string name="PRINTCONTENT">9</string>
+    <string name="CANCELPROMPT">10</string>
+    <string name="PRINTERR">11</string>
+    <string name="OVERHEAT">12</string>
+    <string name="MAKER">13</string>
+    <string name="PRINTPICTURE">14</string>
+    <string name="NOBLACKBLOCK">15</string>
+    <string name="wordFont">0</string>
+
+    <string name="GPS_LOCATION_REQUEST">100</string>
+    <string name="ADDRESS_PICKER_REQUEST">1020</string>
+
 
     <string name="app_name">Utility Admin manage</string>
     <string name="register">ลงทะเบียน</string>
@@ -54,11 +75,34 @@
     <string name="savedata">การบันทึกข้อมูล</string>
     <string name="Selectdata">เลือกหัวข้อ</string>
     <string name="detail">รายละเอียด</string>
-    <string name="Startdateinvoice">วันที่แจ้ง</string>
+    <string name="Startdateinvoice">วันที่จด</string>
     <string name="Enddateinvoice">วันครบชำระ</string>
     <string name="travel">ท่องเที่ยว</string>
     <string name="service">บริการ</string>
     <string name="business">ธุรกิจ</string>
     <string name="estate">ทรัพย์สิน</string>
     <string name="findwateruser">ค้นหาผู้ใช้น้ำ</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="password">Password</string>
+    <string name="login">Log in</string>
+    <string name="username">Username</string>
+    <string name="Inputref_2">ระบุ Ref.2</string>
+    <string name="headerscan">แสกน</string>
+    <string name="ref_2">Ref.2</string>
+    <string name="SelectdateAlert">เลือกวันที่แจ้งหนี้และวันครบชำระ</string>
+
+    //Preference
+    <string name="PrefsLogin">UtilityLoginPref</string>
+    <string name="key_login">Login</string>
+    <string name="Userinfo">ข้อมูลผู้ใช้น้ำ</string>
+    <string name="next">ต่อไป</string>
+
 </resources>

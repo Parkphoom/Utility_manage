@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@android:color/white"
+    tools:context="com.wac.utility_manage.MainActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -39,17 +40,17 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/registerbtn"
+                android:id="@+id/savedatabtn"
                 style="@style/textyellow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/button_selector"
-                android:drawableTop="@drawable/icons8_add_user_male_32"
+                android:drawableTop="@drawable/icons8_resume_32"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
-                android:text="@string/headerregister"
+                android:text="@string/savedata"
                 app:layout_constraintStart_toStartOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -107,25 +108,26 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="invisible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+
             <Button
-                android:id="@+id/savedatabtn"
+                android:id="@+id/registerbtn"
                 style="@style/textyellow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/button_selector"
-                android:drawableTop="@drawable/icons8_resume_32"
+                android:drawableTop="@drawable/icons8_add_user_male_32"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
-                android:text="@string/savedata"
+                android:text="@string/headerregister"
                 app:layout_constraintStart_toStartOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
             <Button
                 android:id="@+id/otherbtn"
                 style="@style/textyellow"

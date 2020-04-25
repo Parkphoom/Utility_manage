@@ -7,7 +7,8 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context=".RegisterActivity">
+    android:background="@android:color/white"
+    tools:context="com.wac.utility_manage.RegisterActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -53,25 +54,6 @@
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/gps_text_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/gps_text_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/icons8_place_marker_32px_1"
-                    android:focusable="false"
-                    android:hint="@string/homegps"
-                    android:imeOptions="actionNext"
-                    android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
-
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/valuesId_text_layout"
@@ -85,7 +67,7 @@
                     android:id="@+id/valuesId_text_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/oldwatermeter"
+                    android:hint="@string/valuesid"
                     android:imeOptions="actionNext"
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -121,9 +103,9 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/telnum"
                     android:imeOptions="actionNext"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:maxLength="10" />
             </com.google.android.material.textfield.TextInputLayout>
-
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -145,17 +127,19 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                style="@style/textyellow"
                 android:id="@+id/submitbtn"
-                android:layout_width="wrap_content"
+                style="@style/textyellow"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/button_selector"
                 android:paddingLeft="40dp"
                 android:paddingRight="40dp"
-                android:text="@string/save" />
+                android:text="@string/register" />
         </LinearLayout>
     </ScrollView>
 

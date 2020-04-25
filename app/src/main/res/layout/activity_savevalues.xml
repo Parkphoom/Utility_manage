@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:gravity="center|top"
     android:orientation="vertical"
-    tools:context=".SavevaluesActivity">
+    tools:context="com.wac.utility_manage.SavevaluesActivity">
 
 
     <ScrollView
@@ -19,6 +20,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+<!--            <com.budiyev.android.codescanner.CodeScannerView-->
+<!--                android:id="@+id/scanner_view"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                app:autoFocusButtonColor="@android:color/white"-->
+<!--                app:autoFocusButtonVisible="true"-->
+<!--                app:flashButtonColor="@android:color/white"-->
+<!--                app:flashButtonVisible="true"-->
+<!--                app:frameAspectRatioHeight="1"-->
+<!--                app:frameAspectRatioWidth="1"-->
+<!--                app:frameColor="@android:color/white"-->
+<!--                app:frameCornersRadius="0dp"-->
+<!--                app:frameCornersSize="50dp"-->
+<!--                app:frameSize="0.75"-->
+<!--                app:frameThickness="2dp"-->
+<!--                app:maskColor="#77000000" />-->
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -49,6 +68,7 @@
                     android:hint="@string/meterid"
                     android:imeOptions="actionNext"
                     android:inputType="number" />
+
                 <TextView
                     android:id="@+id/buildingtype_text_input"
                     android:layout_width="match_parent"
@@ -58,6 +78,7 @@
                     android:hint="@string/buildingtype"
                     android:imeOptions="actionNext"
                     android:inputType="number" />
+
                 <TextView
                     android:id="@+id/name_text_input"
                     android:layout_width="match_parent"
@@ -67,6 +88,7 @@
                     android:hint="@string/name"
                     android:imeOptions="actionNext"
                     android:inputType="number" />
+
                 <TextView
                     android:id="@+id/telnum_text_input"
                     android:layout_width="match_parent"
@@ -76,6 +98,7 @@
                     android:hint="@string/telnum"
                     android:imeOptions="actionNext"
                     android:inputType="number" />
+
                 <TextView
                     android:id="@+id/oldwatermeter_text_input"
                     android:layout_width="match_parent"
@@ -86,9 +109,6 @@
                     android:imeOptions="actionNext"
                     android:inputType="number" />
             </LinearLayout>
-
-
-
 
 
             <FrameLayout
@@ -127,25 +147,6 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/gps_text_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/gps_text_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/icons8_place_marker_32px_1"
-                    android:focusable="false"
-                    android:hint="@string/homegps"
-                    android:imeOptions="actionNext"
-                    android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/valuesId_text_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
@@ -176,7 +177,9 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/type"
                     android:imeOptions="actionNext"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:text="ค่าน้ำประปา"
+                    android:visibility="gone" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout

@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.utility_manage">
 
-    <uses-sdk android:maxSdkVersion="23" />
+    <uses-sdk android:maxSdkVersion="29" />
 
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -35,13 +36,13 @@
         android:roundIcon="@drawable/waclogo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SavedataActivity"></activity>
-        <activity android:name=".PaymentActivity" />
-        <activity android:name=".PaymentWaterActivity" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="barcode" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -51,11 +52,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".SavevaluesActivity" />
+        <activity android:name="com.wac.utility_manage.ScannerActivity"></activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.wac.utility_manage.LoginActivity"
             android:theme="@style/AppThemeNoactionbar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,6 +62,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.wac.utility_manage.SavedataActivity" />
+        <activity android:name="com.wac.utility_manage.PaymentActivity" />
+        <activity android:name="com.wac.utility_manage.PaymentWaterActivity" />
+
+
+
+        <activity android:name="com.wac.utility_manage.RegisterActivity" />
+        <activity android:name="com.wac.utility_manage.SavevaluesActivity" />
+        <activity
+            android:name="com.wac.utility_manage.MainActivity"
+            android:theme="@style/AppThemeNoactionbar"></activity>
     </application>
 
 </manifest>

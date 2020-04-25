@@ -12,11 +12,13 @@
         <item name="colorPrimary">#ea7b4f</item>
         <item name="colorPrimaryDark">#dc5d35</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
         <item name="titleTextColor">#fcfdbe</item>
         <item name="materialCalendarStyle">@style/Widget.MaterialComponents.MaterialCalendar</item>
         <item name="materialCalendarFullscreenTheme">@style/ThemeOverlay.MaterialComponents.MaterialCalendar.Fullscreen</item>
         <item name="materialCalendarTheme">@style/ThemeOverlay.MaterialComponents.MaterialCalendar</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
     </style>
     <style name="AppThemeNoactionbar" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
 
@@ -25,6 +27,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@android:color/white</item>
         <item name="titleTextColor">#fcfdbe</item>
+        <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
     </style>
 
 
@@ -37,6 +40,19 @@
         <item name="android:textColor">#fcfdbe</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
+    </style>
+    <style name="textorange" parent="@android:style/TextAppearance">
+        <item name="android:textColor">#fe9d6a</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="textgreen" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@android:color/holo_green_light</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="textred" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@android:color/holo_red_light</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -62,12 +78,14 @@
         <item name="android:layout_gravity">center</item>
     </style>
 
-    <style name="CustomDialogAnimationlefttoright">
-        <item name="android:windowEnterAnimation">@anim/translate_left_side</item>
-        <item name="android:windowExitAnimation">@anim/translate_right_side</item>
-    </style>
     <style name="CustomDialogAnimationuptodown">
         <item name="android:windowEnterAnimation">@anim/slide_up</item>
         <item name="android:windowExitAnimation">@anim/slide_bottom</item>
+    </style>
+    <style name="CustomActivityAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
     </style>
 </resources>
