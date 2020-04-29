@@ -7,6 +7,20 @@
     android:background="@android:color/white"
     tools:context="com.wac.utility_manage.MainActivity">
 
+    <TextView
+        style="@style/textred"
+        android:id="@+id/logout"
+        android:text="@string/logout"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
@@ -108,9 +122,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="invisible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="horizontal">
 
 
@@ -126,20 +140,23 @@
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:text="@string/headerregister"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
             <Button
                 android:id="@+id/otherbtn"
                 style="@style/textyellow"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@drawable/button_selector"
                 android:drawableTop="@drawable/icons8_list_32"
+                android:gravity="center"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
-                android:text="@string/other"
+                android:paddingLeft="80dp"
+                android:paddingRight="80dp"
+                android:text="@string/login"
                 app:layout_constraintStart_toStartOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
         </LinearLayout>

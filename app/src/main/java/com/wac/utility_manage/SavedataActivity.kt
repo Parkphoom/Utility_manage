@@ -9,9 +9,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
+import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.aminography.choosephotohelper.ChoosePhotoHelper
@@ -20,7 +18,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.utility_manage.R
 import com.google.android.gms.location.LocationServices
-import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -34,6 +31,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.util.*
 
 
 class SavedataActivity : AppCompatActivity(), View.OnClickListener {
@@ -50,16 +48,30 @@ class SavedataActivity : AppCompatActivity(), View.OnClickListener {
     private var savedatabtn: Button? = null
     private var img: ImageView? = null
     private var photoFile: File? = null
-    private var infochoicechip: ChipGroup? = null
     private var topic: String = ""
     private var detail: String = ""
 
     var imgOfficial: MultipartBody.Part? = null
-
+    var editTextFilledExposedDropdown: AutoCompleteTextView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_savedata)
         setUI()
+
+        val typelist: MutableList<String> = ArrayList()
+        typelist.add("ท่องเที่ยว")
+        typelist.add("บริการ")
+        typelist.add("ธุรกิจ")
+
+        val typeDataAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
+            this,
+            android.R.layout.simple_spinner_item,
+            typelist
+        )
+
+        editTextFilledExposedDropdown = findViewById(R.id.filled_exposed_dropdown)
+        editTextFilledExposedDropdown?.setAdapter(typeDataAdapter)
+
 
     }
 
@@ -103,27 +115,6 @@ class SavedataActivity : AppCompatActivity(), View.OnClickListener {
         detailinput = findViewById(R.id.detail_text_input)
         pubF.setOntextchange(this, detailinput!!, detaillayout!!)
 
-        infochoicechip = findViewById(R.id.info_choice_chip_group)
-        infochoicechip!!.setOnCheckedChangeListener { group, checkedId ->
-            when (checkedId) {
-                R.id.travelchip -> {
-//                    pubF.message(getString(R.string.travel), this)
-                    topic = getString(R.string.travel)
-                }
-                R.id.servicechip -> {
-//                    pubF.message(getString(R.string.service), this)
-                    topic = getString(R.string.service)
-                }
-                R.id.businesschip -> {
-//                    pubF.message(getString(R.string.business), this)
-                    topic = getString(R.string.business)
-                }
-                R.id.estatechip -> {
-//                    pubF.message(getString(R.string.estate), this)
-                }
-                else -> topic = ""
-            }
-        }
 
         savedatabtn = findViewById<Button>(R.id.savedatabtn)
         savedatabtn!!.setOnClickListener(this)
@@ -230,12 +221,13 @@ class SavedataActivity : AppCompatActivity(), View.OnClickListener {
             detaillayout!!.error = resources.getString(R.string.gettexterror)
             return false
         }
-        if (topic.isEmpty()) {
-            pubF.message("กรุณาเลือกหัวข้อ", FancyToast.CONFUSING,this)
+
+        if (editTextFilledExposedDropdown?.text.toString().trim().isEmpty()) {
+            pubF.message("กรุณาเลือกหัวข้อ", FancyToast.CONFUSING, this)
             return false
         } else {
             detaillayout!!.isErrorEnabled = false
-
+            topic = editTextFilledExposedDropdown?.text.toString()
             detail = detailinput!!.text.toString()
             return true
         }

@@ -356,10 +356,16 @@ public class retrofitCallfuntion {
                     val jsonmessageArray: JSONArray = json?.get("message") as JSONArray
                     Log.d("ressss_s", jsonmessageArray.toString())
 
+                    var id: String? = ""
                     var name: String? = ""
+                    var telnum: String? = ""
+                    var email: String? = ""
                     for (i in 0 until jsonmessageArray.length()) {
                         val jsonmessage: JSONObject? = jsonmessageArray.getJSONObject(i)
+                        id = jsonmessage!!.getString("_id")
                         name = jsonmessage!!.getString("name")
+                        telnum = jsonmessage!!.getString("tel")
+                        email = jsonmessage!!.getString("email")
                         Log.d("ressss_s", name)
 
 //                        homeid = data.get("address").toString()
@@ -374,8 +380,13 @@ public class retrofitCallfuntion {
                         activity.getString(R.string.PrefsLogin),
                         Context.MODE_PRIVATE
                     ).edit()
-//                    editor.putBoolean(activity.getString(R.string.key_login), true)
-                    editor.putString(activity.getString(R.string.key_login), name)
+                    editor.putBoolean(activity.getString(R.string.Status_login), true)
+                    editor.putString(activity.getString(R.string.Admin_username), datalogin.username)
+                    editor.putString(activity.getString(R.string.Admin_password), datalogin.password)
+                    editor.putString(activity.getString(R.string.Admin_name), name)
+                    editor.putString(activity.getString(R.string.Admin_telnum), telnum)
+                    editor.putString(activity.getString(R.string.Admin_email), email)
+                    editor.putString(activity.getString(R.string.Admin_id), id)
                     editor.apply()
 
                     pubF.loadingDialog!!.dismiss()
@@ -494,11 +505,13 @@ public class retrofitCallfuntion {
 
                         pubF.loadingDialog!!.dismiss()
                         pubF.message(jObjError.getString("message"), FancyToast.ERROR, activity)
+                        retrofitcallback.onFailure()
 //                        (view.parent as ViewGroup).removeView(view) // <- fix
 //                        alert.dismiss()
 
                     } catch (e: Exception) {
                         Log.d("ressss_2", e.message)
+                        retrofitcallback.onFailure()
                     }
                 }
             }
@@ -509,7 +522,7 @@ public class retrofitCallfuntion {
             ) {
                 Log.d("ressss", "failllll $t")
                 Log.d("ressss", " ${t.message}")
-
+                retrofitcallback.onFailure()
                 pubF.loadingDialog!!.dismiss()
                 pubF.message(t.message, FancyToast.ERROR, activity)
 
@@ -818,4 +831,6 @@ public class retrofitCallfuntion {
             }
         })
     }
+
+
 }

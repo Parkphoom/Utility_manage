@@ -21,9 +21,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.shashank.sony.fancytoastlib.FancyToast
-import com.telpo.tps550.api.printer.UsbThermalPrinter
 import com.wac.utility_manage.PublicAction.Printfuntion
-import com.wac.utility_manage.PublicAction.PublicValues
 import com.wac.utility_manage.PublicAction.Publicfunction
 import com.wac.utility_manage.PublicAction.Publiclayout
 import com.wac.utility_manage.Retrofit.Data.GpsObj
@@ -53,7 +51,8 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener {
     private var printsilp: Button? = null
     private var printinvoice: Button? = null
 
-    var dateTimeselect: String? = null
+    var dateTimeselectstart: String? = null
+    var dateTimeselectend: String? = null
     var dateselectstart: String? = null
     var dateselectend: String? = null
     private var type: String? = ""
@@ -69,8 +68,11 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener {
 
         val typelist: MutableList<String> = ArrayList()
         typelist.add("ค่าขยะ")
-        typelist.add("ค่าไฟ")
-        typelist.add("ค่าบริการอื่นๆ")
+        typelist.add("ค่าส่วนกลาง")
+        typelist.add("ค่าภาษีโรงเรือน")
+        typelist.add("ค่าภาษีป้าย")
+        typelist.add("ค่าภาษีที่ดิน")
+        typelist.add("ค่าภาษีธุรกิจเฉพาะ")
 
         val typeDataAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
             this,
@@ -137,8 +139,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener {
 
         var actionBar: ActionBar? = null
         actionBar = getSupportActionBar()
-        Publiclayout()
-            .setActionBar(this.resources.getString(R.string.headerpayment), actionBar)
+        Publiclayout().setActionBar(this.resources.getString(R.string.headerpayment), actionBar)
         pubF.Slideleft(this)
 
         setdaterange = findViewById(R.id.setdaterangelayout)
@@ -243,24 +244,20 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener {
         val printbtn = view.findViewById<Button>(R.id.printbtn)
         printbtn.setText(print)
         printbtn.setOnClickListener {
-            prtF.handler = prtF.MyHandler(this@PaymentActivity)
-            prtF.mUsbThermalPrinter = UsbThermalPrinter(this@PaymentActivity)
 
-            prtF.Printheader = "ใบแจ้งค่าบริการ"
-            prtF.Printheader2 = ""
-            prtF.Printcontent = "\nประเภท : $type" +
-                    "\nรวมค่าชำระ : $amount บาท"
-
-            prtF.handler!!.sendMessage(
-                prtF.handler!!.obtainMessage(
-                    PublicValues().PRINTCONTENT,
-                    1,
-                    0,
-                    null
-                )
+            val Strprint = listOf(
+                "ใบแจ้ง$type",
+                        "\nที่อยู่ : $homeid" +
+//                        "\nประเภท : $buildingtype" +
+//                        "\nชื่อผู้ใช้น้ำ : $name" +
+//                        "\nเบอร์โทร : $telnum" +
+                        "\nวันที่แจ้ง : ${pubF.getDatenow()}" +
+                        "\nวันครบชำระ : ${timeendinput?.text.toString()}" +
+                        "\nรวมเงินครั้งนี้ : $amount" +
+                        "\nค้างชำระ : 0 บาท" +
+                        "\nรวมเงินที่ต้องชำระทั้งสิ้น : $amount บาท"
             )
-            val Strprint = listOf("", "")
-            Postinvoice(true, Strprint)
+            Postinvoice(false, Strprint)
 
             (view.parent as ViewGroup).removeView(view) // <- fix
             alert.dismiss()
@@ -291,21 +288,21 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener {
                     val datestart = Date(selection.first!!)
                     val dateend = Date(selection.second!!)
 
-                    val dateTime = SimpleDateFormat("dd/MM/yy,HH:mm:ss")
-                    val date = SimpleDateFormat("yyyy/MM/dd")
+                    val dateTime = SimpleDateFormat("dd/MM/yyyy, HH:mm:ss")
+                    val date = SimpleDateFormat("dd/MM/yyyy")
 
                     //            Log.d("dateee", datestart.hours.toString())
                     //            Log.d("dateee", datestart.minutes.toString())
                     //            Log.d("dateee", datestart.seconds.toString())
 
                     timestartinput!!.setText(date.format(datestart))
-                    dateTimeselect = dateTime.format(datestart)
-                    Log.d("dateee", dateTimeselect)
+                    dateTimeselectstart = dateTime.format(datestart)
+                    Log.d("dateee", dateTimeselectstart)
                     dateselectstart = date.format(datestart)
 
                     timeendinput!!.setText(date.format(dateend))
-                    dateTimeselect = dateTime.format(dateend)
-                    Log.d("dateee", dateTimeselect)
+                    dateTimeselectend = dateTime.format(dateend)
+                    Log.d("dateee", dateTimeselectend)
                     dateselectend = date.format(dateend)
 
                     //            val dateFormat = DateFormat.getDateFormat(this)
@@ -342,8 +339,8 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener {
         dataInvoice.setmeterID("")
         dataInvoice.setmeterVal("")
         dataInvoice.category = type
-        dataInvoice.setstartDate(dateselectstart)
-        dataInvoice.setdueDate(dateselectend)
+        dataInvoice.setstartDate(dateTimeselectstart)
+        dataInvoice.setdueDate(dateTimeselectend)
         dataInvoice.setgps(gpslocation)
         dataInvoice.setpayment(payment)
 
@@ -355,10 +352,11 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
+
+
     override fun onDestroy() {
         super.onDestroy()
         pubF.lat = ""
         pubF.long = ""
     }
-
 }

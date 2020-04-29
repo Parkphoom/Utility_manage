@@ -68,7 +68,12 @@ class Publicfunction {
     }
 
     fun getDatetimenow(): String {
-        val dateTime = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+        val dateTime = SimpleDateFormat("dd/MM/yyyy, HH:mm")
+        val dateTimeNow = dateTime.format(Date())
+        return dateTimeNow
+    }
+    fun getDatenow(): String {
+        val dateTime = SimpleDateFormat("dd/MM/yyyy")
         val dateTimeNow = dateTime.format(Date())
         return dateTimeNow
     }

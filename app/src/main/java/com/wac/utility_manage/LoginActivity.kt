@@ -1,5 +1,6 @@
 package com.wac.utility_manage
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -12,6 +13,7 @@ import com.wac.utility_manage.Retrofit.Data.loginData
 import com.wac.utility_manage.Retrofit.retrofitCallfuntion
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
+
 
     private lateinit var retrofitCallfuntion: retrofitCallfuntion
     private var logindata = loginData()
@@ -27,17 +29,23 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_login)
         initview()
 
-
     }
 
     fun initview() {
         retrofitCallfuntion = retrofitCallfuntion()
 
+        val prefs = getSharedPreferences(
+            getString(R.string.PrefsLogin),
+            Context.MODE_PRIVATE
+        )
+
         usernamelayout = findViewById(R.id.username_text_layout)
         usernameinput = findViewById(R.id.username_text_input)
+        usernameinput?.setText(prefs.getString(getString(R.string.Admin_username),""))
         pubF.setOntextchange(this, usernameinput!!, usernamelayout!!)
         passwordlayout = findViewById(R.id.password_text_layout)
         passwordinput = findViewById(R.id.password_text_input)
+        passwordinput?.setText(prefs.getString(getString(R.string.Admin_password),""))
         pubF.setOntextchange(this, passwordinput!!, passwordlayout!!)
 
         val loginbtn = findViewById<Button>(R.id.Loginbtn)

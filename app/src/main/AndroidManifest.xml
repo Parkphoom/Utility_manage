@@ -36,6 +36,8 @@
         android:roundIcon="@drawable/waclogo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name="com.wac.utility_manage.Fragment.MainFragmentinvoice"></activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -52,7 +54,8 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-        <activity android:name="com.wac.utility_manage.ScannerActivity"></activity>
+
+        <activity android:name="com.wac.utility_manage.ScannerActivity" />
         <activity
             android:name="com.wac.utility_manage.LoginActivity"
             android:theme="@style/AppThemeNoactionbar">
@@ -65,14 +68,11 @@
         <activity android:name="com.wac.utility_manage.SavedataActivity" />
         <activity android:name="com.wac.utility_manage.PaymentActivity" />
         <activity android:name="com.wac.utility_manage.PaymentWaterActivity" />
-
-
-
         <activity android:name="com.wac.utility_manage.RegisterActivity" />
         <activity android:name="com.wac.utility_manage.SavevaluesActivity" />
         <activity
             android:name="com.wac.utility_manage.MainActivity"
-            android:theme="@style/AppThemeNoactionbar"></activity>
+            android:theme="@style/AppThemeNoactionbar" />
     </application>
 
 </manifest>

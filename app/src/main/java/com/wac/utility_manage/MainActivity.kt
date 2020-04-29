@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.utility_manage.R
+import com.wac.utility_manage.Fragment.MainFragmentinvoice
 import com.wac.utility_manage.PublicAction.Publicfunction
 import com.wac.utility_manage.Retrofit.retrofitCallfuntion
 
@@ -17,20 +19,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var pubF: Publicfunction
     private lateinit var retrofitCallfuntion: retrofitCallfuntion
 
-
     var valuesbtn: Button? = null
     var registerbtn: Button? = null
     var paymentwaterbtn: Button? = null
     var paymentbtn: Button? = null
     var savedatabtn: Button? = null
+    var otherbtn: Button? = null
+
+    var logoutbtn: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val prefs = getSharedPreferences(getString(R.string.PrefsLogin), Context.MODE_PRIVATE)
-        val name = prefs.getString(getString(R.string.key_login), "")
-        Log.d("ressss",name)
+        val name = prefs.getBoolean(getString(R.string.Status_login), false)
+        Log.d("ressss", name.toString())
     }
 
     override fun onStart() {
@@ -42,7 +46,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         pubF = Publicfunction()
         retrofitCallfuntion =
             retrofitCallfuntion()
-//        test(this)
+
         valuesbtn = findViewById(R.id.savevaluebtn)
         valuesbtn!!.setOnClickListener(this)
         registerbtn = findViewById(R.id.registerbtn)
@@ -53,6 +57,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         paymentbtn!!.setOnClickListener(this)
         savedatabtn = findViewById(R.id.savedatabtn)
         savedatabtn!!.setOnClickListener(this)
+        otherbtn = findViewById(R.id.otherbtn)
+        otherbtn!!.setOnClickListener(this)
+
+        logoutbtn = findViewById(R.id.logout)
+        logoutbtn!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -77,6 +86,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.savedatabtn -> {
                 val intent = Intent(this, SavedataActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.logout ->{
+
+            }
+            R.id.otherbtn ->{
+                val intent = Intent(this, MainFragmentinvoice::class.java)
                 startActivity(intent)
             }
         }

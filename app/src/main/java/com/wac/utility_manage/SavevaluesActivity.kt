@@ -88,7 +88,6 @@ class SavevaluesActivity : AppCompatActivity(), View.OnClickListener {
     var setdaterangeexport: LinearLayout? = null
     private var submitbtn: Button? = null
     private var printinvoice: Button? = null
-    var timestartinput: TextView? = null
     var timeendinput: TextView? = null
 
     private var photoFile: File? = null
@@ -102,6 +101,7 @@ class SavevaluesActivity : AppCompatActivity(), View.OnClickListener {
     private var findMeterData = findMeterWaterData()
     private lateinit var retrofitCallfuntion: retrofitCallfuntion
     private var choosePhotoHelper: ChoosePhotoHelper? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -142,7 +142,7 @@ class SavevaluesActivity : AppCompatActivity(), View.OnClickListener {
 
             R.id.submitbtn -> {
                 if (checkisempty()) {
-                    val Strprint = listOf("","")
+                    val Strprint = listOf("", "")
                     Postinvoice(true, Strprint)
                 }
             }
@@ -194,7 +194,7 @@ class SavevaluesActivity : AppCompatActivity(), View.OnClickListener {
         val strCSV = "$homeid,,$type,$amount,$startinvoice,$endinvoice,$newwatermeter,$meterid" +
                 ",${gpslocation.latitude},${gpslocation.longitude},ค้างชำระ"
 
-        retrofitCallfuntion.addinvoice(this, dataInvoice, imageFinance, finish,strprint, strCSV)
+        retrofitCallfuntion.addinvoice(this, dataInvoice, imageFinance, finish, strprint, strCSV)
     }
 
     private fun createdialog(strheader1: String, strheader2: String, print: String) {
@@ -242,14 +242,14 @@ class SavevaluesActivity : AppCompatActivity(), View.OnClickListener {
                         "\nประเภท : $buildingtype" +
                         "\nชื่อผู้ใช้น้ำ : $name" +
                         "\nเบอร์โทร : $telnum" +
-                        "\nวันที่แจ้งค่าน้ำ : $startinvoice" +
-                        "\nวันครบชำระ : $endinvoice" +
+                        "\nวันที่แจ้งค่าน้ำ : ${pubF.getDatenow()}" +
+                        "\nวันครบชำระ : ${timeendinput?.text.toString()}" +
                         "\nรวมเงินครั้งนี้ : $amount" +
                         "\nค่าน้ำค้างชำระ : 0 บาท" +
                         "\nรวมเงินที่ต้องชำระทั้งสิ้น : $amount บาท"
             )
 
-            Postinvoice(false,Strprint)
+            Postinvoice(false, Strprint)
 
             (view.parent as ViewGroup).removeView(view) // <- fix
             alert.dismiss()
@@ -283,7 +283,6 @@ class SavevaluesActivity : AppCompatActivity(), View.OnClickListener {
 
         setdaterangeexport = findViewById(R.id.setdaterangeexport)
         setdaterangeexport!!.setOnClickListener(this)
-        timestartinput = findViewById(R.id.txtTimeStart)
         timeendinput = findViewById(R.id.txtTimeEnd)
         cambtn = findViewById(R.id.opencambtn)
         cambtn!!.setOnClickListener(this)
@@ -334,7 +333,7 @@ class SavevaluesActivity : AppCompatActivity(), View.OnClickListener {
             amountlayout!!.error = resources.getString(R.string.gettexterror)
             return false
         }
-        if (timestartinput!!.text.toString().isEmpty() || timeendinput!!.text.toString()
+        if (timeendinput!!.text.toString()
                 .isEmpty()
         ) {
             pubF.message(getString(R.string.SelectdateAlert), FancyToast.CONFUSING, this)
@@ -349,8 +348,8 @@ class SavevaluesActivity : AppCompatActivity(), View.OnClickListener {
             newwatermeter = valuesidinput!!.text.toString()
             type = typepayidinput!!.text.toString()
             amount = amountinput!!.text.toString()
-            startinvoice = timestartinput!!.text.toString()
-            endinvoice = timeendinput!!.text.toString()
+            startinvoice = pubF.getDatetimenow()
+            endinvoice = dateselectend.toString()
 
             return true
         }
@@ -394,7 +393,7 @@ class SavevaluesActivity : AppCompatActivity(), View.OnClickListener {
         Thread(Runnable {
             runOnUiThread {
                 //your code or your request that you want to run on uiThread
-                val builder = MaterialDatePicker.Builder.dateRangePicker()
+                val builder = MaterialDatePicker.Builder.datePicker()
                 val constraintsBuilder = CalendarConstraints.Builder()
                 builder.setCalendarConstraints(constraintsBuilder.build())
                 val picker = builder.build()
@@ -402,22 +401,11 @@ class SavevaluesActivity : AppCompatActivity(), View.OnClickListener {
                 Log.d("dateee", picker.toString())
                 picker.addOnPositiveButtonClickListener { selection -> //Do something...
                     Log.d("dateee", picker.headerText)
-                    Log.d("dateee", selection.first.toString())
-                    Log.d("dateee", selection.second.toString())
-                    val datestart = Date(selection.first!!)
-                    val dateend = Date(selection.second!!)
+                    Log.d("dateee", selection.toString())
+                    val dateend = Date(selection)
 
-                    val dateTime = SimpleDateFormat("dd/MM/yy,HH:mm:ss")
+                    val dateTime = SimpleDateFormat("dd/MM/yyyy, HH:mm:ss")
                     val date = SimpleDateFormat("dd/MM/yyyy")
-
-                    //            Log.d("dateee", datestart.hours.toString())
-                    //            Log.d("dateee", datestart.minutes.toString())
-                    //            Log.d("dateee", datestart.seconds.toString())
-
-                    timestartinput!!.setText(date.format(datestart))
-                    dateTimeselect = dateTime.format(datestart)
-                    Log.d("dateee", dateTimeselect)
-                    dateselectstart = dateTimeselect
 
                     timeendinput!!.setText(date.format(dateend))
                     dateTimeselect = dateTime.format(dateend)
@@ -480,8 +468,15 @@ class SavevaluesActivity : AppCompatActivity(), View.OnClickListener {
 
         alert.show()
         val window = alert.window
-        window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        window.setGravity(Gravity.CENTER)
+        if (window != null) {
+
+            val wlp = window.attributes
+            wlp.gravity = Gravity.CENTER
+            wlp.width = WindowManager.LayoutParams.MATCH_PARENT
+
+            window.attributes = wlp
+
+        }
 
     }
 
@@ -604,7 +599,7 @@ class SavevaluesActivity : AppCompatActivity(), View.OnClickListener {
                 Glide.with(activity)
                     .load(it)
                     .apply(RequestOptions.placeholderOf(R.drawable.icons8_image_200px))
-                    .into(view!!)
+                    .into(view)
                 //        creating request body for file
                 if (it != null) {
                     val file = File(it)

@@ -2,14 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@android:color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
     tools:context="com.wac.utility_manage.SavedataActivity">
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -71,53 +70,27 @@
                     android:textColor="@android:color/black"
                     android:textSize="22sp" />
 
-                <HorizontalScrollView
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/typepay_text_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="5dp">
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:hint="@string/typesavedata">
 
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/info_choice_chip_group"
-                        android:layout_width="wrap_content"
+                    <AutoCompleteTextView
+                        android:id="@+id/filled_exposed_dropdown"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        app:singleLine="true"
-                        app:singleSelection="true">
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/travelchip"
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/travel" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/servicechip"
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/service" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/businesschip"
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/business" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/estatechip"
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:enabled="false"
-                            android:text="@string/estate" />
-
-
-                    </com.google.android.material.chip.ChipGroup>
-
-                </HorizontalScrollView>
             </LinearLayout>
 
             <LinearLayout
@@ -126,9 +99,9 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
-                android:paddingBottom="10dp"
                 android:background="@drawable/border_underline"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -152,9 +125,8 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/detail"
                         android:imeOptions="actionDone"
-                        android:inputType="text"/>
+                        android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
-
 
 
             </LinearLayout>

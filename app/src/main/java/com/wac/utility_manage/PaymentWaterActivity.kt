@@ -6,15 +6,9 @@ import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.utility_manage.R
@@ -32,11 +26,13 @@ import com.wac.utility_manage.Retrofit.Data.PaymentData
 import com.wac.utility_manage.Retrofit.Data.findMeterWaterData
 import com.wac.utility_manage.Retrofit.retrofitCallback
 import com.wac.utility_manage.Retrofit.retrofitCallfuntion
+import kotlinx.android.synthetic.main.activity_payment_water.*
 import org.json.JSONObject
 
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
+
 
     private lateinit var retrofitCallfuntion: retrofitCallfuntion
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -46,12 +42,12 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
     private var findMeterData = findMeterWaterData()
     private var postpaymentData = PaymentData.POST()
 
+    private var watermeterlayout: LinearLayout? = null
+
     private var startvaluesinput: TextInputEditText? = null
     private var startvalueslayout: TextInputLayout? = null
     private var valuesinput: TextInputEditText? = null
     private var valueslayout: TextInputLayout? = null
-    private var amountinput: TextInputEditText? = null
-    private var amountlayout: TextInputLayout? = null
 
     private var txthomdid: TextView? = null
     private var txtmeterid: TextView? = null
@@ -61,6 +57,8 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
     private var txtstartdateinvocie: TextView? = null
     private var txtenddateinvoice: TextView? = null
     private var txtinvoice: TextView? = null
+    private var txtaddress: TextView? = null
+    private var txtcategory: TextView? = null
 
     private var nextbutton: Button? = null
 
@@ -70,8 +68,11 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
     private var values: String? = ""
     private var amount: String? = ""
     private var ref2 = ""
-    private var credit: String? = "0"
     private var invoice_id: String? = "0"
+    private var category: String? = ""
+
+    private var iswater: Boolean = false
+    private var Strprint: List<String> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,29 +85,68 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v?.id) {
-
             R.id.nextbtn -> {
-                if (checkisempty()) {
-                    if (credit!!.toInt() > amount!!.toInt()) {
-                        amountlayout?.error = "จำนวนเงินเกินยอดค้างชำระ"
-                    } else {
-                        if (credit!!.toInt() < amount!!.toInt()) {
-                            pubF.message(
-                                "จำนวนเงินที่จ่ายไม่ครบยอดค้างชำระ",
-                                FancyToast.WARNING,
-                                this
-                            )
-                        }
-                        createdialog(
-                            "ใบเสร็จค่าน้ำประปา",
-                            "(ไม่ใช่ใบแจ้งหนี้)",
-                            getString(R.string.printinvoices)
-                        )
 
-                    }
+                if (iswater) {
 
+                    homeid = txthomdid?.text.toString()
+                    meterid = txtmeterid?.text.toString()
+                    startvalues = startvaluesinput?.text.toString()
+                    values = valuesinput?.text.toString()
+
+                    Strprint = listOf(
+                        "ใบเสร็จ${txtcategory?.text.toString()}",
+                        "\nเลขมิเตอร์ : $meterid" +
+                                "\nเลขมาตรครั้งก่อน : $startvalues" +
+                                "\nเลขมาตรครั้งนี้ : $values" +
+                                "\nหน่วยน้ำที่ใช้ : ${(startvalues!!.toInt() - values!!.toInt())} หน่วย" +
+                                "\nที่อยู่ : $homeid" +
+                                "\nประเภท : ${buildingtype.text.toString()}" +
+                                "\nชื่อผู้ใช้น้ำ : ${txtname?.text.toString()}" +
+                                "\nเบอร์โทร : ${txttelnum?.text.toString()}" +
+                                "\nวันที่แจ้งค่าน้ำ : ${pubF.getDatenow()}" +
+                                "\nวันครบชำระ : ${txtenddateinvoice?.text.toString()}" +
+                                "\n" +
+                                "\n" +
+                                "\nค่าน้ำค้างชำระ : 0 บาท" +
+                                "\nชำระแล้วทั้งสิ้น : $amount บาท"+
+                                "\nวันที่ชำระ : ${pubF.getDatenow()}"
+                    )
+
+                } else {
+                    homeid = txthomdid?.text.toString()
+                    txtmeterid!!.visibility = View.GONE
+                    startvaluesinput!!.visibility = View.GONE
+                    valuesinput!!.visibility = View.GONE
+//                    meterid = txtmeterid?.text.toString()
+//                    startvalues = startvaluesinput?.text.toString()
+//                    values = valuesinput?.text.toString()
+
+                    Strprint = listOf(
+                        "ใบเสร็จ${txtcategory?.text.toString()}",
+                        "\nที่อยู่ : $homeid" +
+                                "\nประเภท : ${buildingtype.text.toString()}" +
+                                "\nชื่อผู้ใช้ : ${txtname?.text.toString()}" +
+                                "\nเบอร์โทร : ${txttelnum?.text.toString()}" +
+                                "\nวันที่แจ้ง : ${pubF.getDatenow()}" +
+                                "\nวันครบชำระ : ${txtenddateinvoice?.text.toString()}" +
+                                "\n" +
+                                "\n" +
+                                "\nค้างชำระ : 0 บาท" +
+                                "\nชำระแล้วทั้งสิ้น : $amount บาท"+
+                                "\nวันที่ชำระ : ${pubF.getDatenow()}"
+                    )
                 }
+
+
+                createdialog(
+                    "ใบเสร็จ${txtcategory?.text.toString()}",
+                    "(ไม่ใช่ใบแจ้งหนี้)",
+                    getString(R.string.printslip),
+                    Strprint
+                )
             }
+
         }
     }
 
@@ -136,7 +176,7 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
         var actionBar: ActionBar? = null
         actionBar = getSupportActionBar()
         Publiclayout().setActionBar(
-            this.resources.getString(R.string.headerpaymentwater),
+            this.resources.getString(R.string.headerpayment),
             actionBar
         )
         ref2 = intent.getStringExtra("Ref2")
@@ -154,12 +194,11 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
         valuesinput = findViewById(R.id.valuesId_text_input)
         valueslayout = findViewById(R.id.valuesId_text_layout)
         pubF.setOntextchange(this, valuesinput!!, valueslayout!!)
-        amountinput = findViewById(R.id.amount_text_input)
-        amountlayout = findViewById(R.id.amount_text_layout)
-        pubF.setOntextchange(this, amountinput!!, amountlayout!!)
+        watermeterlayout = findViewById(R.id.watermeterlayout)
 
         nextbutton = findViewById(R.id.nextbtn)
         nextbutton!!.setOnClickListener(this)
+
 
         txthomdid = findViewById(R.id.homeid)
         txtmeterid = findViewById(R.id.meterId)
@@ -169,9 +208,16 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
         txtstartdateinvocie = findViewById(R.id.TimeStart)
         txtenddateinvoice = findViewById(R.id.TimeEnd)
         txtinvoice = findViewById(R.id.invoice)
+        txtaddress = findViewById(R.id.address)
+        txtcategory = findViewById(R.id.category)
     }
 
-    private fun createdialog(strheader1: String, strheader2: String, print: String) {
+    private fun createdialog(
+        strheader1: String,
+        strheader2: String,
+        print: String,
+        strprint: List<String>
+    ) {
         val builder = AlertDialog.Builder(
             this,
             R.style.CustomDialog
@@ -205,19 +251,19 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
         printbtn.setText(print)
         printbtn.setOnClickListener {
             val prefs = getSharedPreferences(getString(R.string.PrefsLogin), Context.MODE_PRIVATE)
-            val name = prefs.getString(getString(R.string.key_login), "")
+            val name = prefs.getString(getString(R.string.Admin_name), "")
             Log.d("ressss", name)
 
             postpaymentData._idInvoice = invoice_id
             postpaymentData.amount = amount
-            postpaymentData.credit = credit
+            postpaymentData.credit = amount
             postpaymentData.creditDate = pubF.getDatetimenow()
             postpaymentData.receiveName = name
             postpaymentData.remain = "0"
             postpaymentData.via = "เจ้าหน้าที่"
 
-            PostPayment(postpaymentData)
 
+            PostPayment(postpaymentData, strprint)
 
         }
 
@@ -241,16 +287,32 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
         val ref2input = view.findViewById<TextInputEditText>(R.id.ref2_text_input)
         val submitbtn = view.findViewById<Button>(R.id.submitbtn)
         submitbtn.setOnClickListener {
+            if (!ref2input.text?.isEmpty()!!) {
+                ref2 = ref2input.text.toString()
+                Callgetpayment(ref2, view, alert)
+            } else {
+                pubF.message(getString(R.string.Inputref_2), FancyToast.ERROR, this)
+            }
 
-            ref2input.text.toString()
-
-            (view.parent as ViewGroup).removeView(view) // <- fix
-            alert.dismiss()
+        }
+        val closebtn = view.findViewById<ImageButton>(R.id.dialog_closebtn)
+        closebtn.setOnClickListener {
+            this.onBackPressed()
         }
 
         alert.show()
         val window = alert.window
-        window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        if (window != null) {
+
+            val wlp = window.attributes
+            wlp.gravity = Gravity.BOTTOM
+            wlp.width = WindowManager.LayoutParams.MATCH_PARENT
+
+            window.attributes = wlp
+
+        }
+
+
     }
 
 
@@ -263,14 +325,9 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
         if (valuesinput!!.text.toString().isEmpty()) {
             valueslayout!!.error = resources.getString(R.string.gettexterror)
             return false
-        }
-        if (amountinput!!.text.toString().isEmpty()) {
-            amountlayout!!.error = resources.getString(R.string.gettexterror)
-            return false
         } else {
             startvalues = startvaluesinput!!.text.toString()
             values = valuesinput!!.text.toString()
-            credit = amountinput!!.text.toString()
 
             return true
         }
@@ -301,14 +358,64 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
                 object : retrofitCallback {
                     override fun onSucess(value: JSONObject) {
                         Log.d("res_Callgetpayment", value.getString("_id"))
+                        val status: String = value.getJSONObject("payment").getString("status")
+                        if (status.equals("ชำระแล้ว")) {
+                            pubF.message(
+                                "รายการนี้ถูกชำระแล้ว",
+                                FancyToast.INFO,
+                                Toast.LENGTH_LONG,
+                                this@PaymentWaterActivity
+                            )
+                            finish()
+                        } else {
 
-                        invoice_id = value.getString("_id")
-                        txtstartdateinvocie?.setText(value.getString("startDate"))
-                        txtenddateinvoice?.setText(value.getString("dueDate"))
-                        valuesinput?.setText(value.getString("meterVal"))
-                        amount = value.getJSONObject("payment").getString("amount")
-                        txtinvoice?.setText(amount)
+                            val category = value.getString("category")
+                            if (!category.equals("ค่าน้ำประปา")) {
+                                watermeterlayout!!.visibility = View.GONE
+                            } else {
+                                iswater = true
+                            }
+                            txtcategory?.setText(category)
+                            invoice_id = value.getString("_id")
 
+                            var strstartdate = value.getString("startDate")
+                            val startdate = strstartdate.substring(0, strstartdate.indexOf(", "))
+                            txtstartdateinvocie?.setText(startdate)
+
+                            var strenddate = value.getString("dueDate")
+                            val enddate = strenddate.substring(0, strenddate.indexOf(", "))
+                            txtenddateinvoice?.setText(enddate)
+
+                            valuesinput?.setText(value.getString("meterVal"))
+                            amount = value.getJSONObject("payment").getString("amount")
+                            val credit: String = value.getJSONObject("payment").getString("credit")
+                            val remain = (amount?.toInt()!! - credit.toInt())
+                            txtinvoice?.setText(remain.toString())
+
+                            findMeterData.address = value.getString("ref1")
+                            findMeterData.meterid = value.getString("meterId")
+                            Callfinduser(findMeterData)
+                        }
+
+
+                    }
+
+                    override fun onFailure() {
+                        this@PaymentWaterActivity.onBackPressed()
+                    }
+                })
+        }
+    }
+
+    fun Callgetpayment(ref2: String?, view: View, alert: AlertDialog) {
+        //            retrofitCallfuntion.getPayment(this@PaymentWaterActivity,ref2)
+        if (ref2 != null) {
+            retrofitCallfuntion.getPayment(this@PaymentWaterActivity, ref2,
+                object : retrofitCallback {
+                    override fun onSucess(value: JSONObject) {
+                        (view.parent as ViewGroup).removeView(view) // <- fix
+                        alert.dismiss()
+                        Log.d("res_Callgetpayment", value.getString("_id"))
                         val status: String = value.getJSONObject("payment").getString("status")
                         if (status.equals("ชำระแล้ว")) {
                             pubF.message(
@@ -319,14 +426,38 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
                             )
                             finish()
                         } else {
+
+                            category = value.getString("category")
+                            if (!category.equals("ค่าน้ำประปา")) {
+                                watermeterlayout!!.visibility = View.GONE
+                            }
+                            txtcategory?.setText(category)
+                            invoice_id = value.getString("_id")
+                            var strstartdate = value.getString("startDate")
+                            val startdate = strstartdate.substring(0, strstartdate.indexOf(", "))
+                            txtstartdateinvocie?.setText(startdate)
+
+                            var strenddate = value.getString("dueDate")
+                            val enddate = strenddate.substring(0, strenddate.indexOf(", "))
+                            txtenddateinvoice?.setText(enddate)
+                            valuesinput?.setText(value.getString("meterVal"))
+                            amount = value.getJSONObject("payment").getString("amount")
+                            val credit: String = value.getJSONObject("payment").getString("credit")
+                            val remain = (amount?.toInt()!! - credit.toInt())
+                            txtinvoice?.setText(remain.toString())
+
                             findMeterData.address = value.getString("ref1")
                             findMeterData.meterid = value.getString("meterId")
                             Callfinduser(findMeterData)
+
                         }
+
 
                     }
 
-                    override fun onFailure() {}
+                    override fun onFailure() {
+
+                    }
                 })
         }
     }
@@ -344,6 +475,7 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
                     txtmeterid?.setText(data.getString("meterId"))
                     txtbuildingtype?.setText(data.getString("buildingType"))
                     startvaluesinput?.setText(data.getString("meterVal"))
+                    txtaddress?.setText(data.getString("address"))
                     txtname?.setText(user.getString("name"))
                     txttelnum?.setText(user.getString("tel"))
                 }
@@ -352,7 +484,10 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
             })
     }
 
-    fun PostPayment(datapayment: PaymentData.POST) {
+    fun PostPayment(
+        datapayment: PaymentData.POST,
+        strprint: List<String>
+    ) {
         retrofitCallfuntion.postPayment(this@PaymentWaterActivity, datapayment,
             object : retrofitCallback {
                 override fun onSucess(value: JSONObject) {
@@ -364,13 +499,9 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
 
                     prtF.handler = prtF.MyHandler(this@PaymentWaterActivity)
                     prtF.mUsbThermalPrinter = UsbThermalPrinter(this@PaymentWaterActivity)
-                    prtF.Printheader = "ใบแจ้งค่าน้ำประปา"
-                    prtF.Printcontent = "\nที่อยู่ : $homeid" +
-                            "\nเลขมาตรครั้งก่อน : $startvalues" +
-                            "\nเลขมาตรครั้งนี้ : $values" +
-                            "\nเลขจากมิเตอร์ : $meterid" +
-                            "\nรวมค่าชำระ : $amount บาท"
-
+                    prtF.Printheader = strprint[0]
+                    prtF.Printcontent = strprint[1]
+                    prtF.ref2 = ref2
 
                     prtF.handler!!.sendMessage(
                         prtF.handler!!.obtainMessage(
