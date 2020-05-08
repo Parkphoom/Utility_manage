@@ -3,9 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent"
+    android:background="@android:color/transparent">
 
-    >
+    <Button
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:gravity="left"
+        android:id="@+id/closebtn"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/icons8_cancel_48px_1" />
 
     <com.example.kloadingspin.KLoadingSpin
         android:id="@+id/KLoadingSpin"
@@ -19,5 +26,4 @@
         app:textColor="#ffffff"
         app:textSize="20" />
 
-</RelativeLayout>
-<!--    app:backgroundColor="#7F000000"-->
+</RelativeLayout><!--    app:backgroundColor="#7F000000"-->

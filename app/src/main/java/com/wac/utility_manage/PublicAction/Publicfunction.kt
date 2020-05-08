@@ -17,6 +17,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
@@ -137,6 +138,13 @@ class Publicfunction {
                 loadingDialog!!.show()
                 val window = loadingDialog!!.window
                 window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
+                val closebtn = view.findViewById<Button>(R.id.closebtn)
+
+                closebtn.setOnClickListener{
+                    loadingDialog!!.dismiss()
+                }
+
             }
 
 
@@ -209,6 +217,12 @@ class Publicfunction {
                     Log.d("locationn", location?.latitude.toString())
                     lat = location?.latitude.toString()
                     long = location?.longitude.toString()
+                    if(lat.equals("null")){
+                        lat = ""
+                    }
+                    if(long.equals("null")){
+                    long = ""
+                    }
                 }
         }
 

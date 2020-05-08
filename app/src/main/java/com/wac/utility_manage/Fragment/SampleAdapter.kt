@@ -14,8 +14,8 @@ class SampleAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     override fun getPageTitle(position: Int): CharSequence =
         when (position) {
-            0 -> "ชำระค่าน้ำประปา"
-            1 -> "ชำระค่าบริการ"
+            0 -> "ค่าน้ำประปา"
+            1 -> "ค่าบริการอื่นๆ"
             else -> ""
         }
 

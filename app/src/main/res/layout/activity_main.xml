@@ -8,14 +8,14 @@
     tools:context="com.wac.utility_manage.MainActivity">
 
     <TextView
-        style="@style/textred"
         android:id="@+id/logout"
-        android:text="@string/logout"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="10dp"
-        android:textSize="18sp"
+        style="@style/textred"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/logout"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,6 +80,7 @@
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:text="@string/savevalues"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
         </LinearLayout>
@@ -98,25 +99,25 @@
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/button_selector"
-                android:drawableTop="@drawable/icons8_water_32"
+                android:drawableTop="@drawable/icons8_online_payment_32"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
-                android:text="@string/headerpaymentwater"
+                android:text="@string/payment"
                 app:layout_constraintStart_toStartOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
             <Button
-                android:id="@+id/paymentbtn"
+                android:id="@+id/updatebtn"
                 style="@style/textyellow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/button_selector"
-                android:drawableTop="@drawable/icons8_receive_cash_32"
+                android:drawableTop="@drawable/icons8_add_user_male_32"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
-                android:text="@string/headerpayment"
+                android:text="@string/headerupdateuser"
                 app:layout_constraintStart_toStartOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
         </LinearLayout>
@@ -147,16 +148,16 @@
             <Button
                 android:id="@+id/otherbtn"
                 style="@style/textyellow"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/button_selector"
-                android:drawableTop="@drawable/icons8_list_32"
+                android:drawableTop="@drawable/icons8_invoice_32"
                 android:gravity="center"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
                 android:paddingLeft="80dp"
+                android:paddingTop="20dp"
                 android:paddingRight="80dp"
-                android:text="@string/login"
+                android:paddingBottom="20dp"
+                android:text="@string/addinvoice"
                 app:layout_constraintStart_toStartOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
         </LinearLayout>

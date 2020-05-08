@@ -1,5 +1,6 @@
 package com.wac.utility_manage
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -86,9 +87,7 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.nextbtn -> {
-
                 if (iswater) {
-
                     homeid = txthomdid?.text.toString()
                     meterid = txtmeterid?.text.toString()
                     startvalues = startvaluesinput?.text.toString()
@@ -168,6 +167,16 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        ref2 = intent.getStringExtra("Ref2")
+        if (ref2.isEmpty()) {
+            createref2input()
+        } else {
+            Callgetpayment(ref2)
+        }
+    }
+
     private fun setUI() {
         pubF = Publicfunction()
         prtF = Printfuntion()
@@ -179,12 +188,7 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
             this.resources.getString(R.string.headerpayment),
             actionBar
         )
-        ref2 = intent.getStringExtra("Ref2")
-        if (ref2.isEmpty()) {
-            createref2input()
-        } else {
-            Callgetpayment(ref2)
-        }
+
 
 
         pubF.Slideleft(this)
@@ -273,6 +277,7 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    @SuppressLint("InflateParams")
     private fun createref2input() {
         val builder = AlertDialog.Builder(
             this,
@@ -513,7 +518,9 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
                     )
                 }
 
-                override fun onFailure() {}
+                override fun onFailure() {
+//                    Log.d(getString(R.string.LogError), e.message.toString())
+                }
             })
     }
 }

@@ -1,7 +1,9 @@
 <resources>
     //URL
+    <!--    <string name="URL">http://3.0.95.189:</string>-->
+    <!--    <string name="PORT">4005/</string>-->
     <string name="URL">http://10.0.0.205:</string>
-    <string name="PORT">5000/</string>
+    <string name="PORT">4005/</string>
     <string name="addInvoiceURL">addInvoice/</string>
     <string name="regismemberURL">regisMember/</string>
     <string name="addtravelURL">addTravel/</string>
@@ -70,7 +72,7 @@
     <string name="newwatermeter">เลขมาตรครั้งนี้</string>
     <string name="telnum">เบอร์โทร</string>
     <string name="buildingtype">ประเภทสิ่งปลูกสร้าง</string>
-    <string name="name">ชื่อผู้ใช้น้ำ</string>
+    <string name="name">ชื่อผู้ใช้</string>
     <string name="other">อื่นๆ</string>
     <string name="savedata">การบันทึกข้อมูล</string>
     <string name="typesavedata">หัวข้อการบันทึกข้อมูล</string>
@@ -116,5 +118,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="payment">จ่ายเงิน</string>
+    <string name="addinvoice">แจ้งหนี้</string>
+    <string name="submitandnext">บันทึกและดำเนินการต่อ</string>
+    <string name="LogError">Main_Error_Catch</string>
+    <string name="headerupdateuser">อัพเดทข้อมูลผู้ใช้</string>
 
 </resources>

@@ -29,50 +29,53 @@
                 android:orientation="vertical"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp">
+
                 <TextView
                     android:id="@+id/category"
-                    android:layout_gravity="center"
-                    android:textSize="20sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="20sp" />
+
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="ยอดค้างชำระ"
-                    android:textSize="18sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/invoice"
-                    android:gravity="center"
-                    android:textSize="26sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:drawableLeft="@drawable/icons8_thai_baht_50px"
                     android:drawablePadding="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:gravity="center"
+                    android:textSize="26sp" />
+
                 <LinearLayout
-                    android:paddingBottom="10dp"
-                    android:background="@drawable/border_underline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:background="@drawable/border_underline"
+                    android:orientation="horizontal"
+                    android:paddingBottom="10dp">
 
                     <TextView
                         style="@style/textred"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="right"
                         android:layout_weight="1"
                         android:drawablePadding="10dp"
                         android:imeOptions="actionNext"
                         android:inputType="number"
-                        android:layout_gravity="right"
                         android:text="@string/Enddateinvoice" />
 
                     <TextView
-                        style="@style/textred"
                         android:id="@+id/TimeEnd"
+                        style="@style/textred"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
@@ -82,13 +85,13 @@
                 </LinearLayout>
 
                 <TextView
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="20sp"
-                    android:text="@string/Userinfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/Userinfo"
+                    android:textSize="20sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -224,6 +227,7 @@
                         android:gravity="right"
                         android:textAlignment="gravity" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -277,18 +281,14 @@
                 </LinearLayout>
 
 
-
-
-
             </LinearLayout>
-
 
 
             <LinearLayout
                 android:id="@+id/watermeterlayout"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -360,16 +360,16 @@
                     android:background="@drawable/button_selector"
                     android:text="@string/next" />
 
-<!--                <Button-->
-<!--                    android:id="@+id/printpaysilpbtn"-->
-<!--                    style="@style/textorange"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="5dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:background="@drawable/button_orange_stroke"-->
-<!--                    android:enabled="false"-->
-<!--                    android:text="@string/printslip" />-->
+                <!--                <Button-->
+                <!--                    android:id="@+id/printpaysilpbtn"-->
+                <!--                    style="@style/textorange"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginTop="5dp"-->
+                <!--                    android:layout_weight="1"-->
+                <!--                    android:background="@drawable/button_orange_stroke"-->
+                <!--                    android:enabled="false"-->
+                <!--                    android:text="@string/printslip" />-->
 
             </LinearLayout>
         </LinearLayout>

@@ -3,10 +3,14 @@ package com.wac.utility_manage.Fragment
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.EditText
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
@@ -50,7 +54,7 @@ class MainFragmentinvoice : AppCompatActivity() {
 
         var actionBar: ActionBar? = null
         actionBar = getSupportActionBar()
-        Publiclayout().setActionBar(this.resources.getString(R.string.payment), actionBar)
+        Publiclayout().setActionBar(this.resources.getString(R.string.addinvoice), actionBar)
 
         val tabLayout: TabLayout = findViewById(R.id.tab_layout)
 
@@ -75,10 +79,35 @@ class MainFragmentinvoice : AppCompatActivity() {
             }
         })
     }
+
+    fun getFragmentRefreshListener(): FragmentRefreshListener? {
+        return fragmentRefreshListener
+    }
+
+    fun getFragmentRefreshListener2(): FragmentRefreshListener? {
+        return fragmentRefreshListener2
+    }
+
+    fun setFragmentRefreshListener(fragmentRefreshListener: FragmentRefreshListener?) {
+        this.fragmentRefreshListener = fragmentRefreshListener
+    }
+
+    fun setFragmentRefreshListener2(fragmentRefreshListener2: FragmentRefreshListener?) {
+        this.fragmentRefreshListener2 = fragmentRefreshListener2
+    }
+
+    private var fragmentRefreshListener: FragmentRefreshListener? = null
+    private var fragmentRefreshListener2: FragmentRefreshListener? = null
+
+    interface FragmentRefreshListener {
+        fun onRefresh()
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
+
 
     override fun onBackPressed() {
         super.onBackPressed()
@@ -86,6 +115,23 @@ class MainFragmentinvoice : AppCompatActivity() {
             R.anim.slide_in_left,
             R.anim.slide_out_right
         )
+    }
+
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        if (event.getAction() === MotionEvent.ACTION_DOWN) {
+            val v = currentFocus
+            if (v is EditText) {
+                val outRect = Rect()
+                v.getGlobalVisibleRect(outRect)
+                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                    v.clearFocus()
+                    val imm: InputMethodManager =
+                        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(v.windowToken, 0)
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event)
     }
 
     private fun createFindIdDialog() {
@@ -202,15 +248,21 @@ class MainFragmentinvoice : AppCompatActivity() {
                         val user =
                             jsonmessage.getJSONObject("home").getJSONArray("user").getJSONObject(0)
 
-//                        homeid = data.get("address").toString()
-//                        meterid = data.get("meterId").toString()
-//                        buildingtype = data.get("buildingType").toString()
-//                        name = user.get("name").toString()
-//                        telnum = user.get("tel").toString()
-//                        oldwatermeter = data.get("meterVal").toString()
+//                        val fragment = FragmentWaterinvoice.newInstance()
+                        val fragmentwater = FragmentWaterinvoice.newInstance(data, user)
+
+                        if (getFragmentRefreshListener() != null) {
+                            getFragmentRefreshListener()?.onRefresh()
+                        }
+                        val fragmentother = FragmentOtherinvoice.newInstance(data, user)
+                        if (getFragmentRefreshListener2() != null) {
+                            getFragmentRefreshListener2()?.onRefresh()
+                        }
+
+
                     }
 
-//
+
 //                    homeidinput!!.text = "${getString(R.string.homeid)} : $homeid"
 //                    meteridinput!!.text = "${getString(R.string.meterid)} : $meterid"
 //                    buildingtypeinput!!.text = "${getString(R.string.buildingtype)} : $buildingtype"
@@ -218,6 +270,7 @@ class MainFragmentinvoice : AppCompatActivity() {
 //                    telnuminput!!.text = "${getString(R.string.telnum)} : $telnum"
 //                    oldwatermeterinput!!.text =
 //                        "${getString(R.string.oldwatermeter)} : $oldwatermeter"
+
 
                     pubF.loadingDialog!!.dismiss()
 
@@ -251,7 +304,6 @@ class MainFragmentinvoice : AppCompatActivity() {
 
                 pubF.loadingDialog!!.dismiss()
                 pubF.message(t.message, FancyToast.ERROR, activity)
-
 
             }
         })

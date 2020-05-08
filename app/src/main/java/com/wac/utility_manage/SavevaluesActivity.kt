@@ -126,11 +126,6 @@ class SavevaluesActivity : AppCompatActivity(), View.OnClickListener {
         )
     }
 
-    override fun onStart() {
-        super.onStart()
-        pubF.obtieneLocalizacion(this, pubF.fusedLocationClient)
-
-    }
 
 
     override fun onClick(v: View?) {

@@ -62,6 +62,7 @@ class SavedataActivity : AppCompatActivity(), View.OnClickListener {
         typelist.add("ท่องเที่ยว")
         typelist.add("บริการ")
         typelist.add("ธุรกิจ")
+        typelist.add("ทรัพย์สิน")
 
         val typeDataAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
             this,

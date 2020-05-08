@@ -1,13 +1,14 @@
 package com.wac.utility_manage
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.SurfaceHolder
-import android.view.SurfaceView
-import android.view.View
+import android.view.*
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -17,6 +18,7 @@ import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.Detector.Detections
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
+import com.google.android.material.textfield.TextInputEditText
 import com.shashank.sony.fancytoastlib.FancyToast
 import com.wac.utility_manage.PublicAction.Publicfunction
 import com.wac.utility_manage.PublicAction.Publiclayout
@@ -58,7 +60,6 @@ class ScannerActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun initialiseDetectorsAndSources() {
         pubF.message("Barcode scanner started", FancyToast.INFO, this)
-
         barcodeDetector = BarcodeDetector.Builder(this)
             .setBarcodeFormats(Barcode.ALL_FORMATS)
             .build()
@@ -136,6 +137,54 @@ class ScannerActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    private var ref2 = ""
+    @SuppressLint("InflateParams")
+    private fun createref2input() {
+        val builder = AlertDialog.Builder(
+            this,
+            R.style.CustomDialog
+        )
+        val view: View = LayoutInflater.from(this).inflate(R.layout.dialog_ref2, null)
+
+        builder.setView(view)
+        builder.setCancelable(false)
+        val alert = builder.create()
+
+        val ref2input = view.findViewById<TextInputEditText>(R.id.ref2_text_input)
+        val submitbtn = view.findViewById<Button>(R.id.submitbtn)
+        submitbtn.setOnClickListener {
+            if (!ref2input.text?.isEmpty()!!) {
+                ref2 = ref2input.text.toString()
+
+                val intent = Intent(this@ScannerActivity, PaymentWaterActivity::class.java)
+                intent.putExtra("Ref2", ref2)
+                startActivity(intent)
+                finish()
+            } else {
+                pubF.message(getString(R.string.Inputref_2), FancyToast.ERROR, this)
+            }
+
+        }
+        val closebtn = view.findViewById<ImageButton>(R.id.dialog_closebtn)
+        closebtn.setOnClickListener {
+            this.onBackPressed()
+        }
+
+        alert.show()
+        val window = alert.window
+        if (window != null) {
+
+            val wlp = window.attributes
+            wlp.gravity = Gravity.BOTTOM
+            wlp.width = WindowManager.LayoutParams.MATCH_PARENT
+
+            window.attributes = wlp
+
+        }
+
+
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
@@ -161,10 +210,8 @@ class ScannerActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.inputRef2btn -> {
-                val intent = Intent(this@ScannerActivity, PaymentWaterActivity::class.java)
-                intent.putExtra("Ref2", "")
-                startActivity(intent)
-                finish()
+                createref2input()
+
             }
         }
     }

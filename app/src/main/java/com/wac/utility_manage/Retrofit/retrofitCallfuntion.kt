@@ -80,36 +80,52 @@ public class retrofitCallfuntion {
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
-                    val ref2 = json!!.getJSONObject("message").getString("generation")
-                    Log.d("ressss_s", ref2.toString())
+                    var ref2: String? = null
+                    if (json != null) {
+                        try {
+                            ref2 = json.getJSONObject("message").getString("generation")
 
-                    pubF.loadingDialog!!.dismiss()
-                    pubF.message(
-                        activity.getResources().getString(R.string.fileuploadSuccess),
-                        FancyToast.SUCCESS,
-                        activity
-                    )
-                    if (finish) {
-                        activity.onBackPressed()
-                    } else {
-                        val prtF = Printfuntion()
-                        prtF.handler = prtF.MyHandler(activity)
-                        prtF.mUsbThermalPrinter = UsbThermalPrinter(activity)
+                            Log.d("ressss_s", ref2.toString())
 
-                        prtF.Printheader = strprint[0]
-                        prtF.Printcontent = strprint[1]
-                        prtF.ref2 = ref2
-
-
-                        prtF.handler!!.sendMessage(
-                            prtF.handler!!.obtainMessage(
-                                PublicValues().PRINTCONTENT,
-                                1,
-                                0,
-                                null
+                            pubF.loadingDialog!!.dismiss()
+                            pubF.message(
+                                activity.getResources().getString(R.string.fileuploadSuccess),
+                                FancyToast.SUCCESS,
+                                activity
                             )
-                        )
+                            if (finish) {
+                                activity.onBackPressed()
+                            } else {
+                                val prtF = Printfuntion()
+                                prtF.handler = prtF.MyHandler(activity)
+                                prtF.mUsbThermalPrinter = UsbThermalPrinter(activity)
+
+                                prtF.Printheader = strprint[0]
+                                prtF.Printcontent = strprint[1]
+                                prtF.ref2 = ref2
+
+
+                                prtF.handler!!.sendMessage(
+                                    prtF.handler!!.obtainMessage(
+                                        PublicValues().PRINTCONTENT,
+                                        1,
+                                        0,
+                                        null
+                                    )
+                                )
+                            }
+                        } catch (e: java.lang.Exception) {
+                            Log.d(activity.getString(R.string.LogError), e.toString())
+
+                            pubF.loadingDialog!!.dismiss()
+
+                            if (finish) {
+                                activity.onBackPressed()
+                            }
+                        }
+
                     }
+
 
                 } else {
                     try {
@@ -119,7 +135,7 @@ public class retrofitCallfuntion {
 
 
                     } catch (e: Exception) {
-                        Log.d("ressss_2", e.message.toString())
+                        Log.d(activity.getString(R.string.LogError), e.message.toString())
                     }
                 }
             }
@@ -203,7 +219,7 @@ public class retrofitCallfuntion {
 
 
                     } catch (e: Exception) {
-                        Log.d("ressss_2", e.message.toString())
+                        Log.d(activity.getString(R.string.LogError), e.message.toString())
                     }
                 }
             }
@@ -250,6 +266,9 @@ public class retrofitCallfuntion {
         }
         if (apiName.equals(activity.getString(R.string.service))) {
             Apiname = activity.getString(R.string.addserviceURL)
+        }
+        if (apiName.equals(activity.getString(R.string.estate))) {
+            Apiname = activity.getString(R.string.addassetURL)
         }
 
 
@@ -353,20 +372,22 @@ public class retrofitCallfuntion {
                     }
                     Log.d("ressss_s", json.toString())
 
-                    val jsonmessageArray: JSONArray = json?.get("message") as JSONArray
-                    Log.d("ressss_s", jsonmessageArray.toString())
+                    val jsonmessageArray: JSONArray
+                    try {
+                        jsonmessageArray = json?.get("message") as JSONArray
+                        Log.d("ressss_s", jsonmessageArray.toString())
 
-                    var id: String? = ""
-                    var name: String? = ""
-                    var telnum: String? = ""
-                    var email: String? = ""
-                    for (i in 0 until jsonmessageArray.length()) {
-                        val jsonmessage: JSONObject? = jsonmessageArray.getJSONObject(i)
-                        id = jsonmessage!!.getString("_id")
-                        name = jsonmessage!!.getString("name")
-                        telnum = jsonmessage!!.getString("tel")
-                        email = jsonmessage!!.getString("email")
-                        Log.d("ressss_s", name)
+                        var id: String? = ""
+                        var name: String? = ""
+                        var telnum: String? = ""
+                        var email: String? = ""
+                        for (i in 0 until jsonmessageArray.length()) {
+                            val jsonmessage: JSONObject = jsonmessageArray.getJSONObject(i)
+                            id = jsonmessage!!.getString("_id")
+                            name = jsonmessage!!.getString("name")
+                            telnum = jsonmessage!!.getString("tel")
+                            email = jsonmessage!!.getString("email")
+                            Log.d("ressss_s", name)
 
 //                        homeid = data.get("address").toString()
 //                        meterid = data.get("meterId").toString()
@@ -374,35 +395,47 @@ public class retrofitCallfuntion {
 //                        name = user.get("name").toString()
 //                        telnum = user.get("tel").toString()
 //                        oldwatermeter = data.get("meterVal").toString()
+                        }
+
+                        val editor: SharedPreferences.Editor = activity.getSharedPreferences(
+                            activity.getString(R.string.PrefsLogin),
+                            Context.MODE_PRIVATE
+                        ).edit()
+                        editor.putBoolean(activity.getString(R.string.Status_login), true)
+                        editor.putString(
+                            activity.getString(R.string.Admin_username),
+                            datalogin.username
+                        )
+                        editor.putString(
+                            activity.getString(R.string.Admin_password),
+                            datalogin.password
+                        )
+                        editor.putString(activity.getString(R.string.Admin_name), name)
+                        editor.putString(activity.getString(R.string.Admin_telnum), telnum)
+                        editor.putString(activity.getString(R.string.Admin_email), email)
+                        editor.putString(activity.getString(R.string.Admin_id), id)
+                        editor.apply()
+
+                        pubF.loadingDialog!!.dismiss()
+                        pubF.message(
+                            activity.getResources()
+                                .getString(R.string.login) + " " + activity.getResources()
+                                .getString(R.string.success),
+                            FancyToast.SUCCESS,
+                            activity
+                        )
+
+                        val intent = Intent(activity, MainActivity::class.java)
+                        activity.startActivity(intent)
+                        activity.overridePendingTransition(R.anim.slide_up, R.anim.slide_bottom)
+                        activity.finish()
+//                    activity.onBackPressed()
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                        Log.d(activity.getString(R.string.LogError), e.message.toString())
                     }
 
-                    val editor: SharedPreferences.Editor = activity.getSharedPreferences(
-                        activity.getString(R.string.PrefsLogin),
-                        Context.MODE_PRIVATE
-                    ).edit()
-                    editor.putBoolean(activity.getString(R.string.Status_login), true)
-                    editor.putString(activity.getString(R.string.Admin_username), datalogin.username)
-                    editor.putString(activity.getString(R.string.Admin_password), datalogin.password)
-                    editor.putString(activity.getString(R.string.Admin_name), name)
-                    editor.putString(activity.getString(R.string.Admin_telnum), telnum)
-                    editor.putString(activity.getString(R.string.Admin_email), email)
-                    editor.putString(activity.getString(R.string.Admin_id), id)
-                    editor.apply()
 
-                    pubF.loadingDialog!!.dismiss()
-                    pubF.message(
-                        activity.getResources()
-                            .getString(R.string.login) + " " + activity.getResources()
-                            .getString(R.string.success),
-                        FancyToast.SUCCESS,
-                        activity
-                    )
-
-                    val intent = Intent(activity, MainActivity::class.java)
-                    activity.startActivity(intent)
-                    activity.overridePendingTransition(R.anim.slide_up, R.anim.slide_bottom)
-                    activity.finish()
-//                    activity.onBackPressed()
                 } else {
                     try {
                         val jObjError = JSONObject(response.errorBody()!!.string())
@@ -434,7 +467,7 @@ public class retrofitCallfuntion {
                 Log.d("ressss", "failllll $t")
                 pubF.loadingDialog!!.dismiss()
                 pubF.message(
-                    t.message,
+                    "เข้าสู่ระบบไม่สำเร็จ ตรวจสอบการเชื่อมต่อแล้วลองใหม่อีกครั้ง",
                     FancyToast.ERROR,
                     activity
                 )
@@ -504,7 +537,7 @@ public class retrofitCallfuntion {
                         Log.d("ressss_1", jObjError.getString("message"))
 
                         pubF.loadingDialog!!.dismiss()
-                        pubF.message(jObjError.getString("message"), FancyToast.ERROR, activity)
+                        pubF.message(jObjError.getString("message"), FancyToast.ERROR,FancyToast.LENGTH_SHORT, activity)
                         retrofitcallback.onFailure()
 //                        (view.parent as ViewGroup).removeView(view) // <- fix
 //                        alert.dismiss()
@@ -580,13 +613,17 @@ public class retrofitCallfuntion {
                     }
                     Log.d("ressss_s", json.toString())
 
-                    val jsonmessageArray: JSONArray = json?.get("message") as JSONArray
-                    for (i in 0 until jsonmessageArray.length()) {
-                        val jsonmessage: JSONObject? = jsonmessageArray.getJSONObject(i)
-                        val data = jsonmessage!!.getJSONObject("home").getJSONObject("data")
-                        Log.d("ressss_s", data.toString())
-                        val user =
-                            jsonmessage.getJSONObject("home").getJSONArray("user").getJSONObject(0)
+                    val jsonmessageArray: JSONArray
+                    try {
+                        jsonmessageArray = json?.get("message") as JSONArray
+
+                        for (i in 0 until jsonmessageArray.length()) {
+                            val jsonmessage: JSONObject? = jsonmessageArray.getJSONObject(i)
+                            val data = jsonmessage!!.getJSONObject("home").getJSONObject("data")
+                            Log.d("ressss_s", data.toString())
+                            val user =
+                                jsonmessage.getJSONObject("home").getJSONArray("user")
+                                    .getJSONObject(0)
 
 //                        homeid = data.get("address").toString()
 //                        meterid = data.get("meterId").toString()
@@ -594,7 +631,7 @@ public class retrofitCallfuntion {
 //                        name = user.get("name").toString()
 //                        telnum = user.get("tel").toString()
 //                        oldwatermeter = data.get("meterVal").toString()
-                    }
+                        }
 
 //
 //                    homeidinput!!.text = "${getString(R.string.homeid)} : $homeid"
@@ -605,10 +642,13 @@ public class retrofitCallfuntion {
 //                    oldwatermeterinput!!.text =
 //                        "${getString(R.string.oldwatermeter)} : $oldwatermeter"
 
-                    pubF.loadingDialog!!.dismiss()
+                        pubF.loadingDialog!!.dismiss()
 
-                    (view.parent as ViewGroup).removeView(view) // <- fix
-                    alert.dismiss()
+                        (view.parent as ViewGroup).removeView(view) // <- fix
+                        alert.dismiss()
+                    } catch (e: java.lang.Exception) {
+                        Log.d(activity.getString(R.string.LogError), e.message.toString())
+                    }
 
 
                 } else {
@@ -695,22 +735,10 @@ public class retrofitCallfuntion {
 
                         if (jsonmessage != null) {
                             retrofitcallback.onSucess(jsonmessage)
+                            pubF.loadingDialog!!.dismiss()
                         }
 
-//                        homeid = data.get("address").toString()
-//                        meterid = data.get("meterId").toString()
-//                        buildingtype = data.get("buildingType").toString()
-//                        name = user.get("name").toString()
-//                        telnum = user.get("tel").toString()
-//                        oldwatermeter = data.get("meterVal").toString()
                     }
-
-
-
-                    pubF.loadingDialog!!.dismiss()
-
-//                    (view.parent as ViewGroup).removeView(view) // <- fix
-//                    alert.dismiss()
                 } else {
                     try {
                         val jObjError = JSONObject(response.errorBody()!!.string())
@@ -790,15 +818,19 @@ public class retrofitCallfuntion {
                         e.printStackTrace()
                     }
                     Log.d("ressss_s", json.toString())
-//
-                    val jsonmessage: JSONObject = json?.get("message") as JSONObject
-                    retrofitcallback.onSucess(jsonmessage)
+                    try {
+                        val jsonmessage: JSONObject = json?.get("message") as JSONObject
+                        retrofitcallback.onSucess(jsonmessage)
 
 //                        val jsonhomeArray: JSONArray = jsonmessage!!.get("home") as JSONArray
 //                        var jsonhome: JSONObject? = jsonhomeArray.getJSONObject(0)
 //                        val jsondata : JSONObject? = jsonhome!!.getJSONObject("data")
 
-                    pubF.loadingDialog!!.dismiss()
+                        pubF.loadingDialog!!.dismiss()
+                    }catch (e:JSONException){
+                        Log.d(activity.getString(R.string.LogError), e.message.toString())
+                    }
+
 
                 } else {
                     try {

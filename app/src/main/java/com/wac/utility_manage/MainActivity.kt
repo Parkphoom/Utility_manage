@@ -2,6 +2,7 @@ package com.wac.utility_manage
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,13 +10,16 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.utility_manage.R
+import com.shashank.sony.fancytoastlib.FancyToast
 import com.wac.utility_manage.Fragment.MainFragmentinvoice
 import com.wac.utility_manage.PublicAction.Publicfunction
 import com.wac.utility_manage.Retrofit.retrofitCallfuntion
+import java.util.*
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
+    private var backButtonCount: Int = 0
     private lateinit var pubF: Publicfunction
     private lateinit var retrofitCallfuntion: retrofitCallfuntion
 
@@ -53,7 +57,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         registerbtn!!.setOnClickListener(this)
         paymentwaterbtn = findViewById(R.id.paywaterbtn)
         paymentwaterbtn!!.setOnClickListener(this)
-        paymentbtn = findViewById(R.id.paymentbtn)
+        paymentbtn = findViewById(R.id.updatebtn)
         paymentbtn!!.setOnClickListener(this)
         savedatabtn = findViewById(R.id.savedatabtn)
         savedatabtn!!.setOnClickListener(this)
@@ -80,8 +84,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 val intent = Intent(this, ScannerActivity::class.java)
                 startActivity(intent)
             }
-            R.id.paymentbtn -> {
-                val intent = Intent(this, PaymentActivity::class.java)
+            R.id.updatebtn -> {
+                val intent = Intent(this, UpdateUserActivity::class.java)
                 startActivity(intent)
             }
             R.id.savedatabtn -> {
@@ -89,7 +93,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
             }
             R.id.logout ->{
+                val editor: SharedPreferences.Editor = this.getSharedPreferences(
+                    this.getString(R.string.PrefsLogin),
+                    Context.MODE_PRIVATE
+                ).edit()
+                editor.putBoolean(this.getString(R.string.Status_login), false)
+                editor.putString(this.getString(R.string.Admin_username), "")
+                editor.putString(this.getString(R.string.Admin_password), "")
+                editor.putString(this.getString(R.string.Admin_name), "")
+                editor.putString(this.getString(R.string.Admin_telnum), "")
+                editor.putString(this.getString(R.string.Admin_email), "")
+                editor.putString(this.getString(R.string.Admin_id), "")
+                editor.apply()
 
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
             }
             R.id.otherbtn ->{
                 val intent = Intent(this, MainFragmentinvoice::class.java)
@@ -99,6 +117,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    override fun onBackPressed() {
+        if (backButtonCount >= 1) {
+            val intent = Intent(Intent.ACTION_MAIN)
+            intent.addCategory(Intent.CATEGORY_HOME)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+        } else {
+            pubF.message("Press the back button once again to close the application.",FancyToast.INFO,this)
 
+            backButtonCount++
+            Timer().schedule(object : TimerTask() {
+                override fun run() {
+                    backButtonCount = 0
+                }
+            }, 2000)
+        }
+    }
 
 }

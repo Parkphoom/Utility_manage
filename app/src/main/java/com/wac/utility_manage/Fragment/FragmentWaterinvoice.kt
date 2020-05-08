@@ -12,6 +12,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.aminography.choosephotohelper.ChoosePhotoHelper
 import com.aminography.choosephotohelper.callback.ChoosePhotoCallback
+import com.bitvale.switcher.SwitcherX
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.utility_manage.R
@@ -31,6 +32,7 @@ import com.wac.utility_manage.Retrofit.retrofitCallfuntion
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONObject
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -41,12 +43,7 @@ class FragmentWaterinvoice : Fragment(), View.OnClickListener {
     private var pictureImagePath = ""
     private val Image_Capture_Code2 = 2
 
-    private var homeid: String = ""
-    private var meterid: String = ""
-    private var buildingtype: String = ""
-    private var name: String = ""
-    private var telnum: String = ""
-    private var oldwatermeter: String = ""
+
     private var newwatermeter: String = ""
     private var type: String = ""
     private var amount: String = ""
@@ -56,7 +53,7 @@ class FragmentWaterinvoice : Fragment(), View.OnClickListener {
     private var via: String = ""
     var imageFinance: MultipartBody.Part? = null
 
-    private var homeidinput: TextView? = null
+    var homeidinput: TextView? = null
     private var meteridinput: TextView? = null
     private var buildingtypeinput: TextView? = null
     private var nameinput: TextView? = null
@@ -77,6 +74,8 @@ class FragmentWaterinvoice : Fragment(), View.OnClickListener {
     private var printinvoice: Button? = null
     var timeendinput: TextView? = null
 
+    private var turnonprint: Boolean = true
+    private var Switcher: SwitcherX? = null
     private var photoFile: File? = null
     private val CAPTURE_IMAGE_REQUEST = 1
     private val IMAGE_DIRECTORY_NAME = "WAC"
@@ -89,20 +88,79 @@ class FragmentWaterinvoice : Fragment(), View.OnClickListener {
     private lateinit var retrofitCallfuntion: retrofitCallfuntion
     private var choosePhotoHelper: ChoosePhotoHelper? = null
 
+
+    companion object {
+        public var homeid: String = ""
+        private var meterid: String = ""
+        private var buildingtype: String = ""
+        private var name: String = ""
+        private var telnum: String = ""
+        private var oldwatermeter: String = ""
+
+        fun newInstance(): FragmentWaterinvoice = FragmentWaterinvoice()
+
+        fun newInstance(data: JSONObject, user: JSONObject): FragmentWaterinvoice =
+            FragmentWaterinvoice().apply {
+                homeid = data.get("address").toString()
+                meterid = data.get("meterId").toString()
+                buildingtype = data.get("buildingType").toString()
+                name = user.get("name").toString()
+                telnum = user.get("tel").toString()
+                oldwatermeter = data.get("meterVal").toString()
+
+                Log.d("refresh-1", homeid)
+            }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_waterinvoice, container, false)
         setUI(root)
+
+        (activity as MainFragmentinvoice?)!!.setFragmentRefreshListener(object :
+            MainFragmentinvoice.FragmentRefreshListener {
+            override fun onRefresh() {
+                // Refresh Your Fragment
+                Log.d("refresh_1", "in")
+                Log.d("refresh_1", homeid)
+                settext()
+
+            }
+        })
+
+
+        Switcher!!.setOnCheckedChangeListener { checked ->
+            if (checked) {
+                turnonprint = true
+                Log.d("checked", turnonprint.toString())
+            }
+            else{
+                turnonprint = false
+                Log.d("checked", turnonprint.toString())
+            }
+        }
         return root
+    }
+
+
+    fun settext() {
+
+        homeidinput!!.text = homeid
+        meteridinput!!.text = meterid
+        buildingtypeinput!!.text = buildingtype
+        nameinput!!.text = name
+        telnuminput!!.text = telnum
+        oldwatermeterinput!!.text = oldwatermeter
+
     }
 
     override fun onStart() {
         super.onStart()
-         pubF.obtieneLocalizacion(activity as Activity, pubF.fusedLocationClient)
-
+        pubF.obtieneLocalizacion(activity as Activity, pubF.fusedLocationClient)
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -129,7 +187,7 @@ class FragmentWaterinvoice : Fragment(), View.OnClickListener {
         printinvoice!!.setOnClickListener(this)
 
         imgcam = root.findViewById(R.id.imgfromcam)
-
+        Switcher = root.findViewById(R.id.switcher)
         homeidinput = root.findViewById(R.id.homeid_text_input)
         meteridinput = root.findViewById(R.id.meterId_text_input)
         buildingtypeinput = root.findViewById(R.id.buildingtype_text_input)
@@ -153,6 +211,7 @@ class FragmentWaterinvoice : Fragment(), View.OnClickListener {
         floatingActionButton.setOnClickListener {
             choosePhotoHelper!!.showChooser()
         }
+
     }
 
     public fun Photohelper(fragment: Fragment, view: ImageView) {
@@ -174,9 +233,6 @@ class FragmentWaterinvoice : Fragment(), View.OnClickListener {
             })
     }
 
-    companion object {
-        fun newInstance(): FragmentWaterinvoice = FragmentWaterinvoice()
-    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -200,7 +256,17 @@ class FragmentWaterinvoice : Fragment(), View.OnClickListener {
                     activity?.let { pubF.obtieneLocalizacion(it, pubF.fusedLocationClient) }
                 }
                 if (checkisempty()) {
-                    createdialog("ใบแจ้งค่าน้ำประปา", "(ไม่ใช่ใบเสร็จรับเเงิน)", "พิมพ์ใบแจ้งหนี้")
+                    if (turnonprint) {
+                        createdialog(
+                            "ใบแจ้งค่าน้ำประปา",
+                            "(ไม่ใช่ใบเสร็จรับเเงิน)",
+                            "พิมพ์ใบแจ้งหนี้"
+                        )
+                    } else {
+                        val Strprint = listOf("", "")
+                        Postinvoice(true, Strprint)
+                    }
+
 
                 }
             }
@@ -389,4 +455,6 @@ class FragmentWaterinvoice : Fragment(), View.OnClickListener {
         window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
     }
+
+
 }
