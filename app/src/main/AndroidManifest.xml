@@ -71,6 +71,7 @@
         <activity android:name="com.wac.utility_manage.PaymentWaterActivity" />
         <activity android:name="com.wac.utility_manage.RegisterActivity" />
         <activity android:name="com.wac.utility_manage.SavevaluesActivity" />
+        <activity android:name="com.wac.utility_manage.maplocation.MapsActivity" />
         <activity
             android:name="com.wac.utility_manage.MainActivity"
             android:theme="@style/AppThemeNoactionbar" >

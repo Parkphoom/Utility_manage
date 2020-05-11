@@ -688,7 +688,8 @@ public class retrofitCallfuntion {
         dataRegister: findMeterWaterData,
         retrofitcallback: retrofitCallback
     ) {
-        pubF.builddialogloading(activity)
+        val publicfunction =Publicfunction()
+        publicfunction.builddialogloading(activity)
         val URL: String = activity.getResources().getString(R.string.URL) + activity.getResources()
             .getString(R.string.PORT)
         Log.d("urllll", URL)
@@ -735,7 +736,7 @@ public class retrofitCallfuntion {
 
                         if (jsonmessage != null) {
                             retrofitcallback.onSucess(jsonmessage)
-                            pubF.loadingDialog!!.dismiss()
+                            publicfunction.loadingDialog?.dismiss()
                         }
 
                     }
@@ -745,13 +746,15 @@ public class retrofitCallfuntion {
                         Log.d("ressss_", jObjError.toString())
                         Log.d("ressss_1", jObjError.getString("message"))
 
-                        pubF.loadingDialog!!.dismiss()
-                        pubF.message(jObjError.getString("message"), FancyToast.WARNING, activity)
+                        publicfunction.loadingDialog?.dismiss()
+                        publicfunction.message(jObjError.getString("message"), FancyToast.WARNING, activity)
 //                        (view.parent as ViewGroup).removeView(view) // <- fix
 //                        alert.dismiss()
 
                     } catch (e: Exception) {
+                        publicfunction.loadingDialog?.dismiss()
                         Log.d("ressss_2", e.message)
+                        publicfunction.message( e.message, FancyToast.WARNING, activity)
                     }
                 }
             }
@@ -762,9 +765,8 @@ public class retrofitCallfuntion {
             ) {
                 Log.d("ressss", "failllll $t")
                 Log.d("ressss", " ${t.message}")
-
-                pubF.loadingDialog!!.dismiss()
-                pubF.message(t.message, FancyToast.ERROR, activity)
+                publicfunction.loadingDialog?.dismiss()
+                publicfunction.message(t.message, FancyToast.ERROR, activity)
 
 
             }
@@ -858,6 +860,98 @@ public class retrofitCallfuntion {
 
                 pubF.loadingDialog!!.dismiss()
                 pubF.message(t.message, FancyToast.ERROR, activity)
+
+
+            }
+        })
+    }
+
+    fun postGPSUpdate(
+        activity: Activity,
+        datagps: GpsObj,
+        homeid:String,
+        retrofitcallback: retrofitCallback
+    ) {
+        val publicfunction =Publicfunction()
+        publicfunction.builddialogloading(activity)
+        val URL: String = activity.getResources().getString(R.string.URL) + activity.getResources()
+            .getString(R.string.PORT)+activity.getResources().getString(R.string.GPSUpdate)
+        Log.d("urllll", URL)
+
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl(URL)
+            .addConverterFactory(GsonConverterFactory.create()) //                .client(httpClient)
+            .build()
+        val api: callApi = retrofit.create<callApi>(callApi::class.java)
+
+        val call: Call<GpsObj> = api.postGPSupdate(datagps, homeid)
+//        Log.d("urllll", java.lang.String.valueOf(dataRegister))
+
+        //finally performing the call
+
+        call.enqueue(object : Callback<GpsObj> {
+            @SuppressLint("SetTextI18n")
+            override fun onResponse(
+                call: Call<GpsObj>,
+                response: Response<GpsObj>
+            ) {
+
+                Log.d("ressss", response.body().toString())
+                Log.d("ressss", response.errorBody().toString())
+                Log.d("ressss", response.headers().toString())
+
+                if (response.isSuccessful) {
+                    val js = Gson().toJson(response.body())
+                    Log.d("ressss_s", js)
+
+                    var json: JSONObject? = null
+                    try {
+                        json = JSONObject(js)
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                    Log.d("ressss_s", json.toString())
+                    try {
+                        val jsonmessage: JSONObject = json?.get("message") as JSONObject
+                        retrofitcallback.onSucess(jsonmessage)
+
+//                        val jsonhomeArray: JSONArray = jsonmessage!!.get("home") as JSONArray
+//                        var jsonhome: JSONObject? = jsonhomeArray.getJSONObject(0)
+//                        val jsondata : JSONObject? = jsonhome!!.getJSONObject("data")
+
+                        publicfunction.loadingDialog!!.dismiss()
+                    }catch (e:JSONException){
+                        Log.d(activity.getString(R.string.LogError), e.message.toString())
+                    }
+
+
+                } else {
+                    try {
+                        val jObjError = JSONObject(response.errorBody()!!.string())
+                        Log.d("ressss_", jObjError.toString())
+                        Log.d("ressss_1", jObjError.getString("message"))
+
+                        publicfunction.loadingDialog!!.dismiss()
+                        publicfunction.message(jObjError.getString("message"), FancyToast.ERROR, activity)
+//                        (view.parent as ViewGroup).removeView(view) // <- fix
+//                        alert.dismiss()
+
+                    } catch (e: Exception) {
+                        Log.d("ressss_2", e.message)
+                    }
+                }
+            }
+
+            override fun onFailure(
+                call: Call<GpsObj?>,
+                t: Throwable
+            ) {
+                Log.d("ressss", "failllll $t")
+                Log.d("ressss", " ${t.message}")
+
+                publicfunction.loadingDialog!!.dismiss()
+                publicfunction.message(t.message, FancyToast.ERROR, activity)
 
 
             }

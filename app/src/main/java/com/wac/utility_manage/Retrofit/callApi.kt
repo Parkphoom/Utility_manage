@@ -59,5 +59,12 @@ interface callApi {
         @Body data: PaymentData.POST
         , @Path(value = "port", encoded = true) id: String
     ): Call<PaymentData.POST>
+
+    @POST("{port}")
+    fun postGPSupdate(
+        @Body data: GpsObj
+        , @Path(value = "port", encoded = true) id: String
+    ): Call<GpsObj>
+
 }
 

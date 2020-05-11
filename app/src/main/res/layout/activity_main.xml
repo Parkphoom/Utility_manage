@@ -106,18 +106,19 @@
                 app:layout_constraintStart_toStartOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
+
             <Button
-                android:id="@+id/updatebtn"
+                android:layout_marginBottom="20dp"
+                android:id="@+id/otherbtn"
                 style="@style/textyellow"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/button_selector"
-                android:drawableTop="@drawable/icons8_add_user_male_32"
+                android:drawableTop="@drawable/icons8_invoice_32"
+                android:gravity="center"
                 android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:text="@string/headerupdateuser"
+                android:text="@string/addinvoice"
                 app:layout_constraintStart_toStartOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
         </LinearLayout>
@@ -128,6 +129,19 @@
             android:gravity="center"
             android:orientation="horizontal">
 
+            <Button
+                android:id="@+id/updatebtn"
+                style="@style/textyellow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button_selector"
+                android:drawableTop="@drawable/icons8_add_user_male_32"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:text="@string/headerupdateuser"
+                app:layout_constraintStart_toStartOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
             <Button
                 android:id="@+id/registerbtn"
@@ -145,21 +159,7 @@
                 app:layout_constraintStart_toStartOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-            <Button
-                android:id="@+id/otherbtn"
-                style="@style/textyellow"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_selector"
-                android:drawableTop="@drawable/icons8_invoice_32"
-                android:gravity="center"
-                android:paddingLeft="80dp"
-                android:paddingTop="20dp"
-                android:paddingRight="80dp"
-                android:paddingBottom="20dp"
-                android:text="@string/addinvoice"
-                app:layout_constraintStart_toStartOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
         </LinearLayout>
 
     </LinearLayout>

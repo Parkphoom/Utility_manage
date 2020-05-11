@@ -7,7 +7,47 @@
     android:background="@android:color/white"
     android:focusable="true"
     android:focusableInTouchMode="true"
+    android:orientation="vertical"
     tools:context="com.wac.utility_manage.UpdateUserActivity">
+
+
+
+    <Button
+        android:id="@+id/select_location_button"
+        android:layout_width="fill_parent"
+        android:layout_height="36dp"
+        android:layout_gravity="bottom"
+        android:layout_margin="8dp"
+        android:background="@color/colorPrimary"
+        android:text="Select a location"
+        android:textColor="@android:color/white" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/homeId_text_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="2dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/homeId_text_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/homeid"
+            android:imeOptions="actionDone"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/nextbtn"
+        android:layout_width="fill_parent"
+        android:layout_height="36dp"
+        android:layout_gravity="bottom"
+        android:layout_margin="8dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/submit"
+        android:textColor="@android:color/white" />
 
 
 

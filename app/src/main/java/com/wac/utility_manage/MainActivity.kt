@@ -14,6 +14,7 @@ import com.shashank.sony.fancytoastlib.FancyToast
 import com.wac.utility_manage.Fragment.MainFragmentinvoice
 import com.wac.utility_manage.PublicAction.Publicfunction
 import com.wac.utility_manage.Retrofit.retrofitCallfuntion
+import com.wac.utility_manage.maplocation.MapsActivity
 import java.util.*
 
 
@@ -85,7 +86,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
             }
             R.id.updatebtn -> {
-                val intent = Intent(this, UpdateUserActivity::class.java)
+                val intent = Intent(this, MapsActivity::class.java)
                 startActivity(intent)
             }
             R.id.savedatabtn -> {
