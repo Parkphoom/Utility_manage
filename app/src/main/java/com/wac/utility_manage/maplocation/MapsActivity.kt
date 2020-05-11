@@ -125,7 +125,7 @@ class MapsActivity : AppCompatActivity(),
         pubF.fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         var actionBar: ActionBar? = null
-        actionBar = getSupportActionBar()
+        actionBar = supportActionBar
         Publiclayout().setActionBar(this.resources.getString(R.string.headerupdateuser), actionBar)
 
         homeidlayout = findViewById(R.id.homeId_text_layout)
@@ -249,7 +249,7 @@ class MapsActivity : AppCompatActivity(),
 
     override fun onLocationChanged(location: Location) {
         try {
-            location?.let { changeMap(it) }
+            location.let { changeMap(it) }
             LocationServices.FusedLocationApi.removeLocationUpdates(
                 mGoogleApiClient, this
             )
@@ -432,28 +432,6 @@ class MapsActivity : AppCompatActivity(),
         startService(intent)
     }
 
-    private fun openAutocompleteActivity() {
-        try {
-            // The autocomplete activity requires Google Play Services to be available. The intent
-            // builder checks this and throws an exception if it is not the case.
-            val intent = PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
-                .build(this)
-            startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE)
-        } catch (e: GooglePlayServicesRepairableException) {
-            // Indicates that Google Play Services is either not installed or not up to date. Prompt
-            // the user to correct the issue.
-            GoogleApiAvailability.getInstance().getErrorDialog(
-                this, e.connectionStatusCode,
-                0 /* requestCode */
-            ).show()
-        } catch (e: GooglePlayServicesNotAvailableException) {
-            // Indicates that Google Play Services is not available and the problem is not easily
-            // resolvable.
-            val message = "Google Play Services is not available: " +
-                    GoogleApiAvailability.getInstance().getErrorString(e.errorCode)
-            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
-        }
-    }
 
     /**
      * Called after the autocomplete activity has finished to return its result.
