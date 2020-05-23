@@ -22,7 +22,7 @@ class Printfuntion {
     var mUsbThermalPrinter: UsbThermalPrinter? = null
     var handler: MyHandler? = null
 
-    public var loadingDialog : Dialog? = null
+    var loadingDialog: Dialog? = null
 
     var logo: Bitmap? = null
 //    var QRCode: Bitmap? = null
@@ -31,22 +31,10 @@ class Printfuntion {
     private var nopaper = false
 
     var Printheader: String = ""
-        get() = field
-        set(value) {
-            field = value
-        }
     var Printheader2: String = ""
-        get() = field
-        set(value) {
-            field = value
-        }
     var Printcontent: String = ""
-        get() = field
-        set(value) {
-            field = value
-        }
 
-    public inner class contentPrintThread : Thread() {
+    inner class contentPrintThread : Thread() {
         override fun run() {
             super.run()
             try {
@@ -144,8 +132,7 @@ class Printfuntion {
         }
     }
 
-    public inner class MyHandler(private val activity: Activity) : Handler() {
-
+    inner class MyHandler(private val activity: Activity) : Handler() {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
                 PublicValues().NOPAPER -> {
@@ -168,7 +155,7 @@ class Printfuntion {
                 }
                 PublicValues().PRINTCONTENT -> {
                     logo = BitmapFactory.decodeResource(
-                        activity.getResources(),
+                        activity.resources,
                         R.drawable.waclogo
                     )
 

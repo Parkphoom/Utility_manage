@@ -66,5 +66,14 @@ interface callApi {
         , @Path(value = "port", encoded = true) id: String
     ): Call<GpsObj>
 
+    @GET("{Api}")
+    fun getAllinvoice(@Path(value = "Api", encoded = true) id: String)
+            : Call<allinvoiceData>
+
+    @GET("{Api}")
+    fun getResponse(@Path(value = "Api", encoded = true) id: String): Call<Map<String, Any>>
+
+    @GET("{Api}")
+    fun getCategory(@Path(value = "Api", encoded = true) id: String): Call<Array<Any>>
 }
 

@@ -1,0 +1,2 @@
+rootProject.name='Utility_manage'
+include ':app'

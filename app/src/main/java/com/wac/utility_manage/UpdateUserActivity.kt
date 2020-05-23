@@ -23,11 +23,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.mapbox.android.core.permissions.PermissionsManager
-import com.mapbox.mapboxsdk.maps.MapView
-import com.mapbox.mapboxsdk.maps.MapboxMap
-import com.mapbox.mapboxsdk.style.layers.FillLayer
-import com.mapbox.mapboxsdk.style.layers.Layer
 import com.smartlib.addresspicker.AddressPickerActivity.Companion.RESULT_ADDRESS
 import com.wac.utility_manage.PublicAction.Printfuntion
 import com.wac.utility_manage.PublicAction.PublicValues
@@ -37,6 +32,7 @@ import com.wac.utility_manage.Retrofit.Data.GpsObj
 import com.wac.utility_manage.Retrofit.Data.findMeterWaterData
 import com.wac.utility_manage.Retrofit.retrofitCallback
 import com.wac.utility_manage.Retrofit.retrofitCallfuntion
+import org.json.JSONArray
 import org.json.JSONObject
 
 
@@ -63,16 +59,11 @@ class UpdateUserActivity : AppCompatActivity(), View.OnClickListener
     private lateinit var retrofitCallfuntion: retrofitCallfuntion
 
     private val DROPPED_MARKER_LAYER_ID = "DROPPED_MARKER_LAYER_ID"
-    private var mapView: MapView? = null
-    private var mapboxMap: MapboxMap? = null
     private var selectLocationButton: Button? = null
-    private var permissionsManager: PermissionsManager? = null
     private var hoveringMarker: ImageView? = null
-    private var droppedMarkerLayer: Layer? = null
     private var homeididinput: TextInputEditText? = null
     private var homeidlayout: TextInputLayout? = null
     private var submitbtn: Button? = null
-    var building: FillLayer? = null
 
     private var lat:String? = ""
     private var lng:String? = ""
@@ -138,7 +129,7 @@ class UpdateUserActivity : AppCompatActivity(), View.OnClickListener
         pubF.fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         var actionBar: ActionBar? = null
-        actionBar = getSupportActionBar()
+        actionBar = supportActionBar
         Publiclayout().setActionBar(this.resources.getString(R.string.headerupdateuser), actionBar)
 
         homeidlayout = findViewById(R.id.homeId_text_layout)
@@ -151,7 +142,7 @@ class UpdateUserActivity : AppCompatActivity(), View.OnClickListener
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        if (event.getAction() === MotionEvent.ACTION_DOWN) {
+        if (event.action === MotionEvent.ACTION_DOWN) {
             val v = currentFocus
             if (v is EditText) {
                 val outRect = Rect()
@@ -200,6 +191,10 @@ class UpdateUserActivity : AppCompatActivity(), View.OnClickListener
 
                 }
 
+                override fun onSucess(value: JSONArray) {
+
+                }
+
                 override fun onFailure() {
 //                    Log.d(getString(R.string.LogError), e.message.toString())
                 }
@@ -218,6 +213,10 @@ class UpdateUserActivity : AppCompatActivity(), View.OnClickListener
                     dataGPS.latitude = lat
                     dataGPS.longitude = lng
                     PostGps(dataGPS,value.getString("_id"))
+                }
+
+                override fun onSucess(value: JSONArray) {
+
                 }
 
                 override fun onFailure() {}

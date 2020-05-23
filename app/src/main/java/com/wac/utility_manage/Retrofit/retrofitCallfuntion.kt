@@ -2,13 +2,10 @@ package com.wac.utility_manage.Retrofit
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
-import android.view.View
-import android.view.ViewGroup
 import com.example.queuedemo_kotlin.Retrofit.callApi
 import com.example.utility_manage.R
 import com.google.gson.Gson
@@ -20,6 +17,7 @@ import com.wac.utility_manage.PublicAction.PublicValues
 import com.wac.utility_manage.PublicAction.Publicfunction
 import com.wac.utility_manage.Retrofit.Data.*
 import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -28,9 +26,16 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.security.SecureRandom
+import java.security.cert.X509Certificate
+import javax.net.ssl.HostnameVerifier
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
+import javax.security.cert.CertificateException
 
 
-public class retrofitCallfuntion {
+class retrofitCallfuntion {
 
     private lateinit var pubF: Publicfunction
 
@@ -45,11 +50,11 @@ public class retrofitCallfuntion {
         pubF = Publicfunction()
         pubF.builddialogloading(activity)
 
-        val URL: String = activity.getResources().getString(R.string.URL) + activity.getResources()
+        val URL: String = activity.resources.getString(R.string.URL) + activity.resources
             .getString(R.string.PORT)
         Log.d("urllll", URL)
 
-        val Upload: String = activity.getResources().getString(R.string.addInvoiceURL)
+        val Upload: String = activity.resources.getString(R.string.addInvoiceURL)
 
         val retrofit = Retrofit.Builder()
             .baseUrl(URL)
@@ -89,7 +94,7 @@ public class retrofitCallfuntion {
 
                             pubF.loadingDialog!!.dismiss()
                             pubF.message(
-                                activity.getResources().getString(R.string.fileuploadSuccess),
+                                activity.resources.getString(R.string.fileuploadSuccess),
                                 FancyToast.SUCCESS,
                                 activity
                             )
@@ -146,16 +151,7 @@ public class retrofitCallfuntion {
             ) {
                 Log.d("ressss", "failllll $t")
                 pubF.loadingDialog!!.dismiss()
-//                pubF.message(
-//                    t.message,
-//                    activity
-//                )
-                pubF.writeToCsv(
-                    PublicValues().headercsvAddinvoice,
-                    strCSV,
-                    PublicValues().CSVnameAddinvoice,
-                    activity
-                )
+
 
                 if (finish) {
                     activity.onBackPressed()
@@ -172,11 +168,11 @@ public class retrofitCallfuntion {
     ) {
         pubF = Publicfunction()
         pubF.builddialogloading(activity)
-        val URL: String = activity.getResources().getString(R.string.URL) + activity.getResources()
+        val URL: String = activity.resources.getString(R.string.URL) + activity.resources
             .getString(R.string.PORT)
         Log.d("urllll", URL)
 
-        val Upload: String = activity.getResources().getString(R.string.regismemberURL)
+        val Upload: String = activity.resources.getString(R.string.regismemberURL)
 
         val retrofit = Retrofit.Builder()
             .baseUrl(URL)
@@ -206,7 +202,7 @@ public class retrofitCallfuntion {
 
 
                     pubF.message(
-                        activity.getResources().getString(R.string.fileuploadSuccess),
+                        activity.resources.getString(R.string.fileuploadSuccess),
                         FancyToast.SUCCESS,
                         activity
                     )
@@ -254,7 +250,7 @@ public class retrofitCallfuntion {
     ) {
         pubF = Publicfunction()
         pubF.builddialogloading(activity)
-        val URL: String = activity.getResources().getString(R.string.URL) + activity.getResources()
+        val URL: String = activity.resources.getString(R.string.URL) + activity.resources
             .getString(R.string.PORT)
         Log.d("urllll", URL)
         var Apiname = ""
@@ -295,7 +291,7 @@ public class retrofitCallfuntion {
                 if (response.isSuccessful) {
                     pubF.loadingDialog!!.dismiss()
                     pubF.message(
-                        activity.getResources().getString(R.string.fileuploadSuccess),
+                        activity.resources.getString(R.string.fileuploadSuccess),
                         FancyToast.SUCCESS,
                         activity
                     )
@@ -334,10 +330,10 @@ public class retrofitCallfuntion {
     ) {
         pubF = Publicfunction()
         pubF.builddialogloading(activity)
-        val URL: String = activity.getResources().getString(R.string.URL) + activity.getResources()
+        val URL: String = activity.resources.getString(R.string.URL) + activity.resources
             .getString(R.string.PORT)
         Log.d("urllll", URL)
-        var Apiname = activity.getResources().getString(R.string.loginURL)
+        var Apiname = activity.resources.getString(R.string.loginURL)
 
 
         val retrofit = Retrofit.Builder()
@@ -383,10 +379,10 @@ public class retrofitCallfuntion {
                         var email: String? = ""
                         for (i in 0 until jsonmessageArray.length()) {
                             val jsonmessage: JSONObject = jsonmessageArray.getJSONObject(i)
-                            id = jsonmessage!!.getString("_id")
-                            name = jsonmessage!!.getString("name")
-                            telnum = jsonmessage!!.getString("tel")
-                            email = jsonmessage!!.getString("email")
+                            id = jsonmessage.getString("_id")
+                            name = jsonmessage.getString("name")
+                            telnum = jsonmessage.getString("tel")
+                            email = jsonmessage.getString("email")
                             Log.d("ressss_s", name)
 
 //                        homeid = data.get("address").toString()
@@ -418,8 +414,8 @@ public class retrofitCallfuntion {
 
                         pubF.loadingDialog!!.dismiss()
                         pubF.message(
-                            activity.getResources()
-                                .getString(R.string.login) + " " + activity.getResources()
+                            activity.resources
+                                .getString(R.string.login) + " " + activity.resources
                                 .getString(R.string.success),
                             FancyToast.SUCCESS,
                             activity
@@ -482,7 +478,7 @@ public class retrofitCallfuntion {
     ): String? {
         pubF = Publicfunction()
         pubF.builddialogloading(activity)
-        val URL: String = activity.getResources().getString(R.string.URL) + activity.getResources()
+        val URL: String = activity.resources.getString(R.string.URL) + activity.resources
             .getString(R.string.PORT)
         Log.d("urllll", URL)
 
@@ -537,7 +533,12 @@ public class retrofitCallfuntion {
                         Log.d("ressss_1", jObjError.getString("message"))
 
                         pubF.loadingDialog!!.dismiss()
-                        pubF.message(jObjError.getString("message"), FancyToast.ERROR,FancyToast.LENGTH_SHORT, activity)
+                        pubF.message(
+                            jObjError.getString("message"),
+                            FancyToast.ERROR,
+                            FancyToast.LENGTH_SHORT,
+                            activity
+                        )
                         retrofitcallback.onFailure()
 //                        (view.parent as ViewGroup).removeView(view) // <- fix
 //                        alert.dismiss()
@@ -569,132 +570,15 @@ public class retrofitCallfuntion {
     fun findMeterUser(
         activity: Activity,
         dataRegister: findMeterWaterData,
-        view: View,
-        alert: AlertDialog
-    ) {
-        pubF.builddialogloading(activity)
-        val URL: String = activity.getResources().getString(R.string.URL) + activity.getResources()
-            .getString(R.string.PORT)
-        Log.d("urllll", URL)
-
-        val Apiname = activity.getResources().getString(R.string.finddatameteruserURL)
-
-        val retrofit = Retrofit.Builder()
-            .baseUrl(URL)
-            .addConverterFactory(GsonConverterFactory.create()) //                .client(httpClient)
-            .build()
-        val api: callApi = retrofit.create<callApi>(callApi::class.java)
-
-        val call: Call<findMeterWaterData> = api.uploadFindmeter(dataRegister, Apiname)
-        Log.d("urllll", java.lang.String.valueOf(dataRegister))
-
-        //finally performing the call
-
-        call.enqueue(object : Callback<findMeterWaterData?> {
-            @SuppressLint("SetTextI18n")
-            override fun onResponse(
-                call: Call<findMeterWaterData?>,
-                response: Response<findMeterWaterData?>
-            ) {
-
-                Log.d("ressss", response.body().toString())
-//                Log.d("ressss", response.errorBody().toString())
-//                Log.d("ressss", response.headers().toString())
-
-                if (response.isSuccessful) {
-                    val js = Gson().toJson(response.body())
-                    Log.d("ressss_s", js)
-
-                    var json: JSONObject? = null
-                    try {
-                        json = JSONObject(js)
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    }
-                    Log.d("ressss_s", json.toString())
-
-                    val jsonmessageArray: JSONArray
-                    try {
-                        jsonmessageArray = json?.get("message") as JSONArray
-
-                        for (i in 0 until jsonmessageArray.length()) {
-                            val jsonmessage: JSONObject? = jsonmessageArray.getJSONObject(i)
-                            val data = jsonmessage!!.getJSONObject("home").getJSONObject("data")
-                            Log.d("ressss_s", data.toString())
-                            val user =
-                                jsonmessage.getJSONObject("home").getJSONArray("user")
-                                    .getJSONObject(0)
-
-//                        homeid = data.get("address").toString()
-//                        meterid = data.get("meterId").toString()
-//                        buildingtype = data.get("buildingType").toString()
-//                        name = user.get("name").toString()
-//                        telnum = user.get("tel").toString()
-//                        oldwatermeter = data.get("meterVal").toString()
-                        }
-
-//
-//                    homeidinput!!.text = "${getString(R.string.homeid)} : $homeid"
-//                    meteridinput!!.text = "${getString(R.string.meterid)} : $meterid"
-//                    buildingtypeinput!!.text = "${getString(R.string.buildingtype)} : $buildingtype"
-//                    nameinput!!.text = "${getString(R.string.name)} : $name"
-//                    telnuminput!!.text = "${getString(R.string.telnum)} : $telnum"
-//                    oldwatermeterinput!!.text =
-//                        "${getString(R.string.oldwatermeter)} : $oldwatermeter"
-
-                        pubF.loadingDialog!!.dismiss()
-
-                        (view.parent as ViewGroup).removeView(view) // <- fix
-                        alert.dismiss()
-                    } catch (e: java.lang.Exception) {
-                        Log.d(activity.getString(R.string.LogError), e.message.toString())
-                    }
-
-
-                } else {
-                    try {
-                        val jObjError = JSONObject(response.errorBody()!!.string())
-                        Log.d("ressss_", jObjError.toString())
-                        Log.d("ressss_1", jObjError.getString("message"))
-
-                        pubF.loadingDialog!!.dismiss()
-                        pubF.message(jObjError.getString("message"), FancyToast.WARNING, activity)
-//                        (view.parent as ViewGroup).removeView(view) // <- fix
-//                        alert.dismiss()
-
-                    } catch (e: Exception) {
-                        Log.d("ressss_2", e.message)
-                    }
-                }
-            }
-
-            override fun onFailure(
-                call: Call<findMeterWaterData?>,
-                t: Throwable
-            ) {
-                Log.d("ressss", "failllll $t")
-                Log.d("ressss", " ${t.message}")
-
-                pubF.loadingDialog!!.dismiss()
-                pubF.message(t.message, FancyToast.ERROR, activity)
-
-
-            }
-        })
-    }
-
-    fun findMeterUser(
-        activity: Activity,
-        dataRegister: findMeterWaterData,
         retrofitcallback: retrofitCallback
     ) {
-        val publicfunction =Publicfunction()
+        val publicfunction = Publicfunction()
         publicfunction.builddialogloading(activity)
-        val URL: String = activity.getResources().getString(R.string.URL) + activity.getResources()
+        val URL: String = activity.resources.getString(R.string.URL) + activity.resources
             .getString(R.string.PORT)
         Log.d("urllll", URL)
 
-        val Apiname = activity.getResources().getString(R.string.finddatameteruserURL)
+        val Apiname = activity.resources.getString(R.string.finddatameteruserURL)
 
         val retrofit = Retrofit.Builder()
             .baseUrl(URL)
@@ -747,14 +631,18 @@ public class retrofitCallfuntion {
                         Log.d("ressss_1", jObjError.getString("message"))
 
                         publicfunction.loadingDialog?.dismiss()
-                        publicfunction.message(jObjError.getString("message"), FancyToast.WARNING, activity)
+                        publicfunction.message(
+                            jObjError.getString("message"),
+                            FancyToast.WARNING,
+                            activity
+                        )
 //                        (view.parent as ViewGroup).removeView(view) // <- fix
 //                        alert.dismiss()
 
                     } catch (e: Exception) {
                         publicfunction.loadingDialog?.dismiss()
                         Log.d("ressss_2", e.message)
-                        publicfunction.message( e.message, FancyToast.WARNING, activity)
+                        publicfunction.message(e.message, FancyToast.WARNING, activity)
                     }
                 }
             }
@@ -781,11 +669,11 @@ public class retrofitCallfuntion {
     ) {
         pubF = Publicfunction()
         pubF.builddialogloading(activity)
-        val URL: String = activity.getResources().getString(R.string.URL) + activity.getResources()
+        val URL: String = activity.resources.getString(R.string.URL) + activity.resources
             .getString(R.string.PORT)
         Log.d("urllll", URL)
 
-        val Apiname = activity.getResources().getString(R.string.Payment)
+        val Apiname = activity.resources.getString(R.string.Payment)
 
         val retrofit = Retrofit.Builder()
             .baseUrl(URL)
@@ -829,7 +717,7 @@ public class retrofitCallfuntion {
 //                        val jsondata : JSONObject? = jsonhome!!.getJSONObject("data")
 
                         pubF.loadingDialog!!.dismiss()
-                    }catch (e:JSONException){
+                    } catch (e: JSONException) {
                         Log.d(activity.getString(R.string.LogError), e.message.toString())
                     }
 
@@ -869,13 +757,13 @@ public class retrofitCallfuntion {
     fun postGPSUpdate(
         activity: Activity,
         datagps: GpsObj,
-        homeid:String,
+        homeid: String,
         retrofitcallback: retrofitCallback
     ) {
-        val publicfunction =Publicfunction()
+        val publicfunction = Publicfunction()
         publicfunction.builddialogloading(activity)
-        val URL: String = activity.getResources().getString(R.string.URL) + activity.getResources()
-            .getString(R.string.PORT)+activity.getResources().getString(R.string.GPSUpdate)
+        val URL: String = activity.resources.getString(R.string.URL) + activity.resources
+            .getString(R.string.PORT) + activity.resources.getString(R.string.GPSUpdate)
         Log.d("urllll", URL)
 
 
@@ -921,7 +809,7 @@ public class retrofitCallfuntion {
 //                        val jsondata : JSONObject? = jsonhome!!.getJSONObject("data")
 
                         publicfunction.loadingDialog!!.dismiss()
-                    }catch (e:JSONException){
+                    } catch (e: JSONException) {
                         Log.d(activity.getString(R.string.LogError), e.message.toString())
                     }
 
@@ -933,7 +821,11 @@ public class retrofitCallfuntion {
                         Log.d("ressss_1", jObjError.getString("message"))
 
                         publicfunction.loadingDialog!!.dismiss()
-                        publicfunction.message(jObjError.getString("message"), FancyToast.ERROR, activity)
+                        publicfunction.message(
+                            jObjError.getString("message"),
+                            FancyToast.ERROR,
+                            activity
+                        )
 //                        (view.parent as ViewGroup).removeView(view) // <- fix
 //                        alert.dismiss()
 
@@ -958,5 +850,223 @@ public class retrofitCallfuntion {
         })
     }
 
+    fun getAllinvoice(
+        activity: Activity,
+        retrofitcallback: retrofitCallback
+    ) {
+        pubF = Publicfunction()
+        val URL: String = activity.resources.getString(R.string.URL) + activity.resources
+            .getString(R.string.PORT)
+        Log.d("urllll", URL)
+
+        val Apiname = activity.getString(R.string.Allinvoice)
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl(URL)
+            .addConverterFactory(GsonConverterFactory.create()) //                .client(httpClient)
+            .build()
+        val api: callApi = retrofit.create<callApi>(callApi::class.java)
+
+        val call: Call<Map<String, Any>> = api.getResponse(Apiname)
+//        Log.d("urllll", java.lang.String.valueOf(dataRegister))
+
+        //finally performing the call
+
+        call.enqueue(object : Callback<Map<String, Any>> {
+            @SuppressLint("SetTextI18n")
+            override fun onResponse(
+                call: Call<Map<String, Any>>,
+                response: Response<Map<String, Any>>
+            ) {
+
+                Log.d("ressss", response.body().toString())
+
+                if (response.isSuccessful) {
+                    val js = Gson().toJson(response.body())
+                    var json: JSONObject? = JSONObject(js)
+                    val iter = json!!.keys()
+                    while (iter.hasNext()) {
+                        val key = iter.next()
+                        try {
+                            val value = json[key]
+                            Log.d("datadata", value.toString())
+                            if (key == "message") {
+                                Log.d("datadata", (value as JSONArray).toString())
+                                retrofitcallback.onSucess(value)
+                            }
+                        } catch (e: JSONException) {
+                        }
+                    }
+
+                } else {
+                    try {
+                        val jObjError = JSONObject(response.errorBody()!!.string())
+                        Log.d("ressss_", jObjError.toString())
+                        Log.d("ressss_1", jObjError.getString("message"))
+
+                        pubF.message(
+                            jObjError.getString("message"),
+                            FancyToast.ERROR,
+                            FancyToast.LENGTH_SHORT,
+                            activity
+                        )
+                        retrofitcallback.onFailure()
+//                        (view.parent as ViewGroup).removeView(view) // <- fix
+//                        alert.dismiss()
+
+                    } catch (e: Exception) {
+                        Log.d("ressss_2", e.message)
+                        retrofitcallback.onFailure()
+                    }
+                }
+            }
+
+            override fun onFailure(
+                call: Call<Map<String, Any>>,
+                t: Throwable
+            ) {
+                Log.d("ressss", "failllll $t")
+                Log.d("ressss", " ${t.message}")
+                retrofitcallback.onFailure()
+                pubF.message(t.message, FancyToast.ERROR, activity)
+
+            }
+
+        })
+    }
+
+    fun getCategory(
+        activity: Activity,
+        retrofitcallback: retrofitCallback
+    ) {
+        pubF = Publicfunction()
+        val URL: String = activity.resources.getString(R.string.WACURL)
+        Log.d("urllll", URL)
+
+        val Apiname = activity.getString(R.string.Category)
+
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl(URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(getUnsafeOkHttpClient())
+            .build()
+        val api: callApi = retrofit.create<callApi>(callApi::class.java)
+
+        val call: Call<Array<Any>> = api.getCategory(Apiname)
+//        Log.d("urllll", java.lang.String.valueOf(dataRegister))
+
+        //finally performing the call
+
+        call.enqueue(object : Callback<Array<Any>> {
+            @SuppressLint("SetTextI18n")
+            override fun onResponse(
+                call: Call<Array<Any>>,
+                response: Response<Array<Any>>
+            ) {
+
+                Log.d("ressss", response.body().toString())
+
+                if (response.isSuccessful) {
+                    val js = Gson().toJson(response.body())
+
+                    val json: JSONArray? = JSONArray(js)
+                    Log.d("datadata", json.toString())
+                    if (json != null) {
+                        retrofitcallback.onSucess(json)
+                    }
+//                    val iter = json!!.keys()
+//                    while (iter.hasNext()) {
+//                        val key = iter.next()
+//                        try {
+//                            val value = json[key]
+//                            Log.d("datadata", value.toString())
+////
+//                        } catch (e: JSONException) {
+//                        }
+//                    }
+                } else {
+                    try {
+                        val jObjError = JSONObject(response.errorBody()!!.string())
+                        Log.d("ressss_", jObjError.toString())
+                        Log.d("ressss_1", jObjError.getString("message"))
+
+                        pubF.message(
+                            jObjError.getString("message"),
+                            FancyToast.ERROR,
+                            FancyToast.LENGTH_SHORT,
+                            activity
+                        )
+                        retrofitcallback.onFailure()
+
+                    } catch (e: Exception) {
+                        Log.d("ressss_2", e.message)
+                        retrofitcallback.onFailure()
+                    }
+                }
+            }
+
+            override fun onFailure(
+                call: Call<Array<Any>>,
+                t: Throwable
+            ) {
+                Log.d("ressss", "failllll $t")
+                Log.d("ressss", " ${t.message}")
+                retrofitcallback.onFailure()
+                pubF.message(t.message, FancyToast.ERROR, activity)
+
+            }
+
+        })
+    }
+
+
+    private fun getUnsafeOkHttpClient(): OkHttpClient? {
+        return try {
+            // Create a trust manager that does not validate certificate chains
+            val trustAllCerts: Array<TrustManager> = arrayOf<TrustManager>(
+                object : X509TrustManager {
+                    @Throws(CertificateException::class)
+                    override fun checkClientTrusted(
+                        chain: Array<X509Certificate?>?,
+                        authType: String?
+                    ) {
+                    }
+
+                    @Throws(CertificateException::class)
+                    override fun checkServerTrusted(
+                        chain: Array<X509Certificate?>?,
+                        authType: String?
+                    ) {
+                    }
+
+                    override fun getAcceptedIssuers(): Array<X509Certificate?>? {
+                        return arrayOf()
+                    }
+
+                }
+            )
+
+            // Install the all-trusting trust manager
+
+            // Install the all-trusting trust manager
+            val sslContext = SSLContext.getInstance("SSL")
+            sslContext.init(null, trustAllCerts, SecureRandom())
+            // Create an ssl socket factory with our all-trusting manager
+            // Create an ssl socket factory with our all-trusting manager
+            val sslSocketFactory = sslContext.socketFactory
+
+            val builder = OkHttpClient.Builder()
+            builder.sslSocketFactory(
+                sslSocketFactory,
+                (trustAllCerts[0] as X509TrustManager)
+            )
+            builder.hostnameVerifier(HostnameVerifier { hostname, session -> true })
+
+            return builder.build()
+        } catch (e: java.lang.Exception) {
+            throw RuntimeException(e)
+        }
+    }
 
 }

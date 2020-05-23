@@ -1,6 +1,7 @@
 package com.wac.utility_manage.Fragment
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -24,6 +25,7 @@ import com.wac.utility_manage.Retrofit.retrofitCallfuntion
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class FragmentOtherinvoice : Fragment(), View.OnClickListener {
@@ -89,14 +91,27 @@ class FragmentOtherinvoice : Fragment(), View.OnClickListener {
 
         setUI(root)
 
+        val prefs =
+            activity?.getSharedPreferences(getString(R.string.PrefsLogin), Context.MODE_PRIVATE)
+        val set: MutableSet<String>? = prefs?.getStringSet(getString(R.string.CategorySet), null)
 
-        val typelist: MutableList<String> = ArrayList()
-        typelist.add("ค่าขยะ")
-        typelist.add("ค่าส่วนกลาง")
-        typelist.add("ค่าภาษีโรงเรือน")
-        typelist.add("ค่าภาษีป้าย")
-        typelist.add("ค่าภาษีที่ดิน")
-        typelist.add("ค่าภาษีธุรกิจเฉพาะ")
+        var typelist: MutableList<String> = ArrayList()
+        if (set != null) {
+            for (element in set) {
+                Log.d("typelist", element)
+                if (element != "ค่าน้ำประปา") {
+                    typelist.add(element)
+                }
+            }
+        } else {
+            typelist.add("ค่าขยะ")
+            typelist.add("ค่าส่วนกลาง")
+            typelist.add("ค่าภาษีโรงเรือน")
+            typelist.add("ค่าภาษีป้าย")
+            typelist.add("ค่าภาษีที่ดิน")
+            typelist.add("ค่าภาษีธุรกิจเฉพาะ")
+        }
+
 
         val typeDataAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
             this.activity!!,
@@ -123,8 +138,7 @@ class FragmentOtherinvoice : Fragment(), View.OnClickListener {
             if (checked) {
                 turnonprint = true
                 Log.d("checked", turnonprint.toString())
-            }
-            else{
+            } else {
                 turnonprint = false
                 Log.d("checked", turnonprint.toString())
             }
@@ -226,7 +240,7 @@ class FragmentOtherinvoice : Fragment(), View.OnClickListener {
                     val dateTime = SimpleDateFormat("dd/MM/yyyy, HH:mm:ss")
                     val date = SimpleDateFormat("dd/MM/yyyy")
 
-                    timeendinput!!.setText(date.format(dateend))
+                    timeendinput!!.text = date.format(dateend)
                     dateTimeselect = dateTime.format(dateend)
                     Log.d("dateee", dateTimeselect)
                     dateselectend = dateTimeselect
@@ -288,7 +302,8 @@ class FragmentOtherinvoice : Fragment(), View.OnClickListener {
         val dialogoldwatermeter = view.findViewById<TextView>(R.id.dialog_oldwatermeter)
         dialogoldwatermeter.text = "${getString(R.string.Startdateinvoice)} : ${pubF.getDatenow()}"
         val dialognewwatermeter = view.findViewById<TextView>(R.id.dialog_newwatermeter)
-        dialognewwatermeter.text = "${getString(R.string.Enddateinvoice)} : ${timeendinput?.text.toString()}"
+        dialognewwatermeter.text =
+            "${getString(R.string.Enddateinvoice)} : ${timeendinput?.text.toString()}"
         val dialogamount = view.findViewById<TextView>(R.id.dialog_amount)
         dialogamount.text = "${getString(R.string.amount)} : $amount บาท"
 
@@ -298,7 +313,7 @@ class FragmentOtherinvoice : Fragment(), View.OnClickListener {
             alert.dismiss()
         }
         val printbtn = view.findViewById<Button>(R.id.printbtn)
-        printbtn.setText(print)
+        printbtn.text = print
         printbtn.setOnClickListener {
 
             val Strprint = listOf(

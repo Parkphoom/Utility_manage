@@ -32,6 +32,7 @@ import com.wac.utility_manage.Retrofit.retrofitCallfuntion
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import org.json.JSONObject
 import java.io.File
 import java.text.SimpleDateFormat
@@ -90,7 +91,7 @@ class FragmentWaterinvoice : Fragment(), View.OnClickListener {
 
 
     companion object {
-        public var homeid: String = ""
+        var homeid: String = ""
         private var meterid: String = ""
         private var buildingtype: String = ""
         private var name: String = ""
@@ -196,13 +197,13 @@ class FragmentWaterinvoice : Fragment(), View.OnClickListener {
         oldwatermeterinput = root.findViewById(R.id.oldwatermeter_text_input)
         valuesidlayout = root.findViewById(R.id.valuesId_text_layout)
         valuesidinput = root.findViewById(R.id.valuesId_text_input)
-        pubF.setOntextchange(this!!.activity!!, valuesidinput!!, valuesidlayout!!)
+        pubF.setOntextchange(this.activity!!, valuesidinput!!, valuesidlayout!!)
         typepayidlayout = root.findViewById(R.id.typepay_text_layout)
         typepayidinput = root.findViewById(R.id.typepay_text_input)
-        pubF.setOntextchange(this!!.activity!!, typepayidinput!!, typepayidlayout!!)
+        pubF.setOntextchange(this.activity!!, typepayidinput!!, typepayidlayout!!)
         amountlayout = root.findViewById(R.id.amount_text_layout)
         amountinput = root.findViewById(R.id.amount_text_input)
-        pubF.setOntextchange(this!!.activity!!, amountinput!!, amountlayout!!)
+        pubF.setOntextchange(this.activity!!, amountinput!!, amountlayout!!)
 
         Photohelper(this, imgcam!!)
 
@@ -214,7 +215,7 @@ class FragmentWaterinvoice : Fragment(), View.OnClickListener {
 
     }
 
-    public fun Photohelper(fragment: Fragment, view: ImageView) {
+    fun Photohelper(fragment: Fragment, view: ImageView) {
         choosePhotoHelper = ChoosePhotoHelper.with(fragment)
             .asFilePath()
             .build(ChoosePhotoCallback {
@@ -225,7 +226,7 @@ class FragmentWaterinvoice : Fragment(), View.OnClickListener {
                 //        creating request body for file
                 if (it != null) {
                     val file = File(it)
-                    val requestFile = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
+                    val requestFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
                     imageFinance =
                         MultipartBody.Part.createFormData("imageFinance", file.name, requestFile)
                 }
@@ -333,7 +334,7 @@ class FragmentWaterinvoice : Fragment(), View.OnClickListener {
                     val dateTime = SimpleDateFormat("dd/MM/yyyy, HH:mm:ss")
                     val date = SimpleDateFormat("dd/MM/yyyy")
 
-                    timeendinput!!.setText(date.format(dateend))
+                    timeendinput!!.text = date.format(dateend)
                     dateTimeselect = dateTime.format(dateend)
                     Log.d("dateee", dateTimeselect)
                     dateselectend = dateTimeselect
@@ -380,6 +381,7 @@ class FragmentWaterinvoice : Fragment(), View.OnClickListener {
         val strCSV = "$homeid,,$type,$amount,$startinvoice,$endinvoice,$newwatermeter,$meterid" +
                 ",${gpslocation.latitude},${gpslocation.longitude},ค้างชำระ"
 
+
         activity?.let {
             retrofitCallfuntion.addinvoice(
                 it,
@@ -390,6 +392,7 @@ class FragmentWaterinvoice : Fragment(), View.OnClickListener {
                 strCSV
             )
         }
+
     }
 
     private fun createdialog(strheader1: String, strheader2: String, print: String) {
@@ -423,7 +426,7 @@ class FragmentWaterinvoice : Fragment(), View.OnClickListener {
             alert.dismiss()
         }
         val printbtn = view.findViewById<Button>(R.id.printbtn)
-        printbtn.setText(print)
+        printbtn.text = print
         printbtn.setOnClickListener {
 
 

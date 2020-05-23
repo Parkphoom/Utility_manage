@@ -20,6 +20,7 @@ import java.util.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
+    private var currentTasks: Any? = null
     private var backButtonCount: Int = 0
     private lateinit var pubF: Publicfunction
     private lateinit var retrofitCallfuntion: retrofitCallfuntion
@@ -37,14 +38,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        if (null == currentTasks) {
+            currentTasks = ArrayList<String>()
+        }
+
+
         val prefs = getSharedPreferences(getString(R.string.PrefsLogin), Context.MODE_PRIVATE)
         val name = prefs.getBoolean(getString(R.string.Status_login), false)
+        val set: MutableSet<String>? = prefs.getStringSet(getString(R.string.CategorySet), null)
         Log.d("ressss", name.toString())
     }
 
     override fun onStart() {
         super.onStart()
         setUI()
+
     }
 
     fun setUI() {
@@ -78,7 +86,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
             }
             R.id.registerbtn -> {
-                val intent = Intent(this, RegisterActivity::class.java)
+                val intent = Intent(this, FindinvoiceActivity::class.java)
                 startActivity(intent)
             }
             R.id.paywaterbtn -> {
@@ -93,7 +101,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 val intent = Intent(this, SavedataActivity::class.java)
                 startActivity(intent)
             }
-            R.id.logout ->{
+            R.id.logout -> {
                 val editor: SharedPreferences.Editor = this.getSharedPreferences(
                     this.getString(R.string.PrefsLogin),
                     Context.MODE_PRIVATE
@@ -110,7 +118,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
             }
-            R.id.otherbtn ->{
+            R.id.otherbtn -> {
                 val intent = Intent(this, MainFragmentinvoice::class.java)
                 startActivity(intent)
             }
@@ -125,7 +133,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
         } else {
-            pubF.message("Press the back button once again to close the application.",FancyToast.INFO,this)
+            pubF.message(
+                "Press the back button once again to close the application.",
+                FancyToast.INFO,
+                this
+            )
 
             backButtonCount++
             Timer().schedule(object : TimerTask() {
@@ -135,5 +147,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }, 2000)
         }
     }
+
 
 }

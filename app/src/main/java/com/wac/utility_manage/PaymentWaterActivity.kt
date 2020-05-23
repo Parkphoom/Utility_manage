@@ -28,6 +28,7 @@ import com.wac.utility_manage.Retrofit.Data.findMeterWaterData
 import com.wac.utility_manage.Retrofit.retrofitCallback
 import com.wac.utility_manage.Retrofit.retrofitCallfuntion
 import kotlinx.android.synthetic.main.activity_payment_water.*
+import org.json.JSONArray
 import org.json.JSONObject
 
 
@@ -100,7 +101,7 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
                                 "\nเลขมาตรครั้งนี้ : $values" +
                                 "\nหน่วยน้ำที่ใช้ : ${(startvalues!!.toInt() - values!!.toInt())} หน่วย" +
                                 "\nที่อยู่ : $homeid" +
-                                "\nประเภท : ${buildingtype.text.toString()}" +
+                                "\nประเภท : ${buildingtype.text}" +
                                 "\nชื่อผู้ใช้น้ำ : ${txtname?.text.toString()}" +
                                 "\nเบอร์โทร : ${txttelnum?.text.toString()}" +
                                 "\nวันที่แจ้งค่าน้ำ : ${pubF.getDatenow()}" +
@@ -124,7 +125,7 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
                     Strprint = listOf(
                         "ใบเสร็จ${txtcategory?.text.toString()}",
                         "\nที่อยู่ : $homeid" +
-                                "\nประเภท : ${buildingtype.text.toString()}" +
+                                "\nประเภท : ${buildingtype.text}" +
                                 "\nชื่อผู้ใช้ : ${txtname?.text.toString()}" +
                                 "\nเบอร์โทร : ${txttelnum?.text.toString()}" +
                                 "\nวันที่แจ้ง : ${pubF.getDatenow()}" +
@@ -154,19 +155,6 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
         return true
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-//        overridePendingTransition(
-//            R.anim.slide_in_left,
-//            R.anim.slide_out_right
-//        )
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-    }
-
     override fun onStart() {
         super.onStart()
         ref2 = intent.getStringExtra("Ref2")
@@ -183,7 +171,7 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
         retrofitCallfuntion = retrofitCallfuntion()
 
         var actionBar: ActionBar? = null
-        actionBar = getSupportActionBar()
+        actionBar = supportActionBar
         Publiclayout().setActionBar(
             this.resources.getString(R.string.headerpayment),
             actionBar
@@ -252,7 +240,7 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
             alert.dismiss()
         }
         val printbtn = view.findViewById<Button>(R.id.printbtn)
-        printbtn.setText(print)
+        printbtn.text = print
         printbtn.setOnClickListener {
             val prefs = getSharedPreferences(getString(R.string.PrefsLogin), Context.MODE_PRIVATE)
             val name = prefs.getString(getString(R.string.Admin_name), "")
@@ -339,7 +327,7 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        if (event.getAction() === MotionEvent.ACTION_DOWN) {
+        if (event.action === MotionEvent.ACTION_DOWN) {
             val v = currentFocus
             if (v is EditText) {
                 val outRect = Rect()
@@ -380,28 +368,32 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
                             } else {
                                 iswater = true
                             }
-                            txtcategory?.setText(category)
+                            txtcategory?.text = category
                             invoice_id = value.getString("_id")
 
                             var strstartdate = value.getString("startDate")
                             val startdate = strstartdate.substring(0, strstartdate.indexOf(", "))
-                            txtstartdateinvocie?.setText(startdate)
+                            txtstartdateinvocie?.text = startdate
 
                             var strenddate = value.getString("dueDate")
                             val enddate = strenddate.substring(0, strenddate.indexOf(", "))
-                            txtenddateinvoice?.setText(enddate)
+                            txtenddateinvoice?.text = enddate
 
                             valuesinput?.setText(value.getString("meterVal"))
                             amount = value.getJSONObject("payment").getString("amount")
-                            val credit: String = value.getJSONObject("payment").getString("credit")
-                            val remain = (amount?.toInt()!! - credit.toInt())
-                            txtinvoice?.setText(remain.toString())
+//                            val credit: String = value.getJSONObject("payment").getString("credit")
+//                            val remain = (amount?.toInt()!! - credit.toInt())
+//                            txtinvoice?.setText(remain.toString())
 
                             findMeterData.address = value.getString("ref1")
                             findMeterData.meterid = value.getString("meterId")
                             Callfinduser(findMeterData)
                         }
 
+
+                    }
+
+                    override fun onSucess(value: JSONArray) {
 
                     }
 
@@ -436,20 +428,20 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
                             if (!category.equals("ค่าน้ำประปา")) {
                                 watermeterlayout!!.visibility = View.GONE
                             }
-                            txtcategory?.setText(category)
+                            txtcategory?.text = category
                             invoice_id = value.getString("_id")
                             var strstartdate = value.getString("startDate")
                             val startdate = strstartdate.substring(0, strstartdate.indexOf(", "))
-                            txtstartdateinvocie?.setText(startdate)
+                            txtstartdateinvocie?.text = startdate
 
                             var strenddate = value.getString("dueDate")
                             val enddate = strenddate.substring(0, strenddate.indexOf(", "))
-                            txtenddateinvoice?.setText(enddate)
+                            txtenddateinvoice?.text = enddate
                             valuesinput?.setText(value.getString("meterVal"))
                             amount = value.getJSONObject("payment").getString("amount")
                             val credit: String = value.getJSONObject("payment").getString("credit")
                             val remain = (amount?.toInt()!! - credit.toInt())
-                            txtinvoice?.setText(remain.toString())
+                            txtinvoice?.text = remain.toString()
 
                             findMeterData.address = value.getString("ref1")
                             findMeterData.meterid = value.getString("meterId")
@@ -457,6 +449,10 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
 
                         }
 
+
+                    }
+
+                    override fun onSucess(value: JSONArray) {
 
                     }
 
@@ -476,13 +472,17 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
                     val user = value.getJSONObject("home").getJSONArray("user").getJSONObject(0)
                     Log.d("res_Callfinduser", user.toString())
 
-                    txthomdid?.setText(data.getString("address"))
-                    txtmeterid?.setText(data.getString("meterId"))
-                    txtbuildingtype?.setText(data.getString("buildingType"))
+                    txthomdid?.text = data.getString("address")
+                    txtmeterid?.text = data.getString("meterId")
+                    txtbuildingtype?.text = data.getString("buildingType")
                     startvaluesinput?.setText(data.getString("meterVal"))
-                    txtaddress?.setText(data.getString("address"))
-                    txtname?.setText(user.getString("name"))
-                    txttelnum?.setText(user.getString("tel"))
+                    txtaddress?.text = data.getString("address")
+                    txtname?.text = user.getString("name")
+                    txttelnum?.text = user.getString("tel")
+                }
+
+                override fun onSucess(value: JSONArray) {
+
                 }
 
                 override fun onFailure() {}
@@ -501,7 +501,6 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
                     val user = value.getString("data")
                     Log.d("res_PostPayment", user.toString())
 
-
                     prtF.handler = prtF.MyHandler(this@PaymentWaterActivity)
                     prtF.mUsbThermalPrinter = UsbThermalPrinter(this@PaymentWaterActivity)
                     prtF.Printheader = strprint[0]
@@ -516,6 +515,10 @@ class PaymentWaterActivity : AppCompatActivity(), View.OnClickListener {
                             null
                         )
                     )
+                }
+
+                override fun onSucess(value: JSONArray) {
+
                 }
 
                 override fun onFailure() {

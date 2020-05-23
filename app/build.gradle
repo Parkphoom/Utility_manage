@@ -19,8 +19,11 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86", "armeabi", "mips", "armeabi-v8a"
         }
-    }
 
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
 
     buildTypes {
         release {
@@ -57,6 +60,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'com.google.android.gms:play-services-vision:20.0.0'
     implementation 'com.google.android.gms:play-services-places:17.0.0'
+    implementation 'com.google.android.libraries.places:places:2.2.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support:support-v4:28.0.0'
     //telpo printer
@@ -65,9 +70,9 @@ dependencies {
     implementation files('libs/telpo_api.jar')
 
     //Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.8.1'
-    implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
-    implementation('com.squareup.okhttp3:logging-interceptor:4.6.0')
+    implementation 'com.squareup.retrofit2:retrofit:2.8.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.8.2'
+    implementation('com.squareup.okhttp3:logging-interceptor:4.7.1')
 
 
     //loadingspin
@@ -76,12 +81,7 @@ dependencies {
     //maps
     implementation 'com.github.shivpujan12:LocationPicker:v1.2'
     implementation 'com.github.BilalSiddiqui:AddressPicker:0.1.0'
-    implementation 'com.mapbox.mapboxsdk:mapbox-sdk-geojson:5.1.0'
-    implementation 'com.mapbox.mapboxsdk:mapbox-sdk-services:5.1.0'
-    implementation ('com.mapbox.mapboxsdk:mapbox-android-sdk:9.2.0'){
-        exclude group: 'group_name', module: 'module_name'
-    }
-
+//    implementation 'com.github.doctoror.geocoder:library:[version]'
 
     //picture
     implementation 'com.aminography:choosephotohelper:1.1.0'
@@ -101,7 +101,13 @@ dependencies {
 
     //Switcher
     implementation 'com.bitvale:switcher:1.1.0'
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
+    //BackdropLayout
+    implementation 'com.github.roiacult:BackdropLayout:v2.0'
+
+    //skeleton
+    implementation 'me.samlss:broccoli:1.0.0'
+
 }
 task nativeLibsToJar(type: Jar, description: 'create a jar archive of the native libs') {
     destinationDir file("$buildDir/native-libs")

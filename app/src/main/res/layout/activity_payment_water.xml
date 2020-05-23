@@ -187,8 +187,6 @@
                         android:layout_weight="1"
                         android:drawableLeft="@drawable/icons8_user_16"
                         android:drawablePadding="10dp"
-                        android:imeOptions="actionNext"
-                        android:inputType="number"
                         android:text="@string/name" />
 
                     <TextView
@@ -214,8 +212,6 @@
                         android:layout_weight="1"
                         android:drawableLeft="@drawable/icons8_telephone_16"
                         android:drawablePadding="10dp"
-                        android:imeOptions="actionNext"
-                        android:inputType="number"
                         android:text="@string/telnum" />
 
                     <TextView
