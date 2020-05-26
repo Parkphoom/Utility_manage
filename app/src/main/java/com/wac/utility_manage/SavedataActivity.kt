@@ -30,6 +30,7 @@ import com.wac.utility_manage.Retrofit.retrofitCallfuntion
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.util.*
 
@@ -50,6 +51,7 @@ class SavedataActivity : AppCompatActivity(), View.OnClickListener {
     private var photoFile: File? = null
     private var topic: String = ""
     private var detail: String = ""
+    var r = ""
 
     var imgOfficial: MultipartBody.Part? = null
     var editTextFilledExposedDropdown: AutoCompleteTextView? = null
@@ -77,7 +79,7 @@ class SavedataActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        if (event.getAction() === MotionEvent.ACTION_DOWN) {
+        if (event.action === MotionEvent.ACTION_DOWN) {
             val v = currentFocus
             if (v is EditText) {
                 val outRect = Rect()
@@ -106,7 +108,7 @@ class SavedataActivity : AppCompatActivity(), View.OnClickListener {
         pubF.fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         var actionBar: ActionBar? = null
-        actionBar = getSupportActionBar()
+        actionBar = supportActionBar
         Publiclayout()
             .setActionBar(this.resources.getString(R.string.savedata), actionBar)
         pubF.Slideleft(this)
@@ -130,19 +132,19 @@ class SavedataActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    public fun Photohelper(activity: Activity, view: ImageView) {
+    fun Photohelper(activity: Activity, view: ImageView) {
         choosePhotoHelper = ChoosePhotoHelper.with(activity)
             .asFilePath()
             .build(ChoosePhotoCallback {
                 Glide.with(activity)
                     .load(it)
                     .apply(RequestOptions.placeholderOf(R.drawable.icons8_image_200px))
-                    .into(view!!)
+                    .into(view)
 
                 //        creating request body for file
                 if (it != null) {
                     val file = File(it)
-                    val requestFile = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
+                    val requestFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
                     imgOfficial =
                         MultipartBody.Part.createFormData("imageOfficial", file.name, requestFile)
                 }
@@ -232,10 +234,6 @@ class SavedataActivity : AppCompatActivity(), View.OnClickListener {
             detail = detailinput!!.text.toString()
             return true
         }
-    }
-
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        super.onPostCreate(savedInstanceState)
     }
 
     override fun onDestroy() {
