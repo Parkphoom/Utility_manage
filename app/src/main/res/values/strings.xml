@@ -1,8 +1,8 @@
 <resources>
     //URL
-    <!--    <string name="URL">http://3.0.95.189:</string>-->
+        <string name="URL">http://10.0.0.205:</string>
     <!--    <string name="PORT">4005/</string>-->
-    <string name="URL">http://18.139.84.245:</string>
+    <!--    <string name="URL">http://18.139.84.245:</string>-->
     <string name="WACURL">https://www.wacinfotech.com/</string>
     <string name="PORT">4002/</string>
     <string name="addInvoiceURL">addInvoice/</string>
